@@ -1,2 +1,0 @@
-# Informasi-Jaypay
-Informasi
