@@ -1,1468 +1,3764 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Input Informasi</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --primary: #42A5F5;
-            --primary-dark: #1E88E5;
-            --primary-soft: #e3f2fd;
-            --page: #f3f6fb;
-            --surface: #ffffff;
-            --text: #1f2933;
-            --muted: #6b7280;
-            --border: #e8edf3;
-            --danger: #dc2626;
-            --danger-soft: #fee2e2;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Rubik', sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            background: var(--page);
-            display: flex;
-            justify-content: center;
-        }
-
-        button,
-        input,
-        textarea {
-            font: inherit;
-        }
-
-        button {
-            border: 0;
-            cursor: pointer;
-        }
-
-        .app {
-            width: 100%;
-            max-width: 420px;
-            min-height: 100vh;
-            background: var(--page);
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: #fff;
-            padding: 14px 16px 86px;
-            border-bottom-left-radius: 16px;
-            border-bottom-right-radius: 16px;
-        }
-
-        .header-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 11px;
-            color: #fff;
-            background: rgba(255, 255, 255, 0.22);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .header-title {
-            text-align: center;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .content {
-            margin-top: -62px;
-            padding: 0 14px 30px;
-        }
-
-        .panel,
-        .recent-card,
-        .empty {
-            background: var(--surface);
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .panel {
-            padding: 15px;
-            margin-bottom: 14px;
-        }
-
-        .panel-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 12px;
-        }
-
-        .mode-tabs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 13px;
-            padding: 4px;
-            border-radius: 12px;
-            background: #eef5f7;
-        }
-
-        .mode-tab {
-            min-height: 36px;
-            border-radius: 9px;
-            color: var(--muted);
-            background: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .mode-tab.active {
-            color: var(--primary);
-            background: #fff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-        }
-
-        .form-grid {
-            display: grid;
-            gap: 11px;
-        }
-
-        .field {
-            display: grid;
-            gap: 6px;
-        }
-
-        .field label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--muted);
-        }
-
-        .field input,
-        .field textarea {
-            width: 100%;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 11px;
-            color: var(--text);
-            background: #fbfdff;
-            outline: none;
-        }
-
-        .field textarea {
-            min-height: 120px;
-            resize: vertical;
-            line-height: 1.5;
-        }
-
-        .price-format {
-            min-height: 146px;
-        }
-
-        .field input:focus,
-        .field textarea:focus {
-            border-color: var(--primary);
-            background: #fff;
-        }
-
-        .actions {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 14px;
-        }
-
-        .message {
-            min-height: 18px;
-            font-size: 12px;
-            line-height: 1.4;
-            color: var(--muted);
-        }
-
-        .message.error {
-            color: var(--danger);
-        }
-
-        .submit {
-            min-height: 40px;
-            padding: 0 15px;
-            border-radius: 10px;
-            color: #fff;
-            background: var(--primary);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        .submit:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-        }
-
-        .price-preview {
-            margin-top: 12px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            overflow: hidden;
-            background: #fff;
-        }
-
-        .price-preview-empty {
-            padding: 13px;
-            color: var(--muted);
-            font-size: 12px;
-            line-height: 1.45;
-            background: #fbfdff;
-        }
-
-        .price-table-wrap {
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        .recent-card .price-table-wrap {
-            margin-top: 8px;
-        }
-
-        .price-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 360px;
-        }
-
-        .price-table th,
-        .price-table td {
-            padding: 9px 10px;
-            border-bottom: 1px solid var(--border);
-            text-align: left;
-            font-size: 11px;
-            vertical-align: middle;
-            white-space: nowrap;
-        }
-
-        .price-table th {
-            color: var(--muted);
-            background: #f8fbfd;
-            font-weight: 700;
-        }
-
-        .price-table tr:last-child td {
-            border-bottom: 0;
-        }
-
-        .price-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-weight: 700;
-        }
-
-        .price-status.up {
-            color: #16a34a;
-        }
-
-        .price-status.down {
-            color: var(--danger);
-        }
-
-        .price-status.same {
-            color: var(--muted);
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            color: var(--text);
-            font-size: 14px;
-            font-weight: 700;
-            margin: 16px 2px 10px;
-        }
-
-        .section-title small {
-            color: var(--muted);
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        .recent-list {
-            display: grid;
-            gap: 12px;
-        }
-
-        .recent-card {
-            padding: 13px;
-            position: relative;
-        }
-
-        .recent-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .recent-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 0;
-        }
-
-        .recent-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            color: var(--primary);
-            background: var(--primary-soft);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            flex: 0 0 auto;
-        }
-
-        .recent-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .recent-meta {
-            min-width: 0;
-        }
-
-        .recent-name {
-            color: var(--text);
-            font-size: 13px;
-            font-weight: 700;
-            overflow-wrap: anywhere;
-        }
-
-        .recent-badge {
-            display: inline-flex;
-            margin-left: 5px;
-            padding: 2px 7px;
-            border-radius: 999px;
-            color: var(--primary);
-            background: var(--primary-soft);
-            font-size: 10px;
-            font-weight: 600;
-            vertical-align: 1px;
-        }
-
-        .recent-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text);
-            margin-top: 10px;
-            overflow-wrap: anywhere;
-        }
-
-        .recent-time {
-            color: var(--muted);
-            font-size: 11px;
-            margin-top: 3px;
-        }
-
-        .delete {
-            width: 32px;
-            height: 32px;
-            border-radius: 9px;
-            color: var(--danger);
-            background: var(--danger-soft);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 0 0 auto;
-        }
-
-        .recent-desc {
-            color: #4b5563;
-            font-size: 12px;
-            line-height: 1.45;
-            margin-top: 8px;
-            overflow-wrap: anywhere;
-        }
-
-        .recent-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 10px;
-        }
-
-        .recent-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-top: 12px;
-            padding-top: 11px;
-            border-top: 1px solid var(--border);
-            color: var(--muted);
-            font-size: 11px;
-        }
-
-        .recent-stats {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .recent-stat {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .tag {
-            color: var(--primary);
-            background: var(--primary-soft);
-            border-radius: 999px;
-            padding: 4px 8px;
-            font-size: 11px;
-        }
-
-        .empty {
-            padding: 22px 14px;
-            color: var(--muted);
-            text-align: center;
-            font-size: 13px;
-            line-height: 1.45;
-        }
-
-        /* Compact layout */
-        .app {
-            max-width: 390px;
-        }
-
-        .header {
-            padding: 10px 12px 66px;
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-        }
-
-        .icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 9px;
-            font-size: 13px;
-        }
-
-        .header-title {
-            font-size: 14px;
-        }
-
-        .content {
-            margin-top: -48px;
-            padding: 0 10px 22px;
-        }
-
-        .panel,
-        .recent-card,
-        .empty {
-            border-radius: 9px;
-        }
-
-        .panel {
-            padding: 11px;
-            margin-bottom: 10px;
-        }
-
-        .panel-title {
-            font-size: 13.5px;
-            margin-bottom: 9px;
-        }
-
-        .mode-tabs {
-            gap: 5px;
-            margin-bottom: 10px;
-            padding: 3px;
-            border-radius: 10px;
-        }
-
-        .mode-tab {
-            min-height: 30px;
-            border-radius: 8px;
-            gap: 5px;
-            font-size: 10.5px;
-        }
-
-        .form-grid {
-            gap: 8px;
-        }
-
-        .field {
-            gap: 4px;
-        }
-
-        .field label {
-            font-size: 10.5px;
-        }
-
-        .field input,
-        .field textarea {
-            border-radius: 8px;
-            padding: 8px 9px;
-            font-size: 12px;
-        }
-
-        .field textarea {
-            min-height: 92px;
-            line-height: 1.45;
-        }
-
-        .price-format {
-            min-height: 112px;
-        }
-
-        .actions {
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .message {
-            font-size: 10.5px;
-        }
-
-        .submit {
-            min-height: 34px;
-            padding: 0 12px;
-            border-radius: 8px;
-            gap: 6px;
-            font-size: 12px;
-        }
-
-        .price-preview {
-            margin-top: 9px;
-            border-radius: 8px;
-        }
-
-        .price-preview-empty {
-            padding: 10px;
-            font-size: 10.5px;
-        }
-
-        .price-table {
-            min-width: 330px;
-        }
-
-        .price-table th,
-        .price-table td {
-            padding: 7px 8px;
-            font-size: 10px;
-        }
-
-        .section-title {
-            font-size: 12.5px;
-            margin: 12px 2px 8px;
-        }
-
-        .section-title small {
-            font-size: 10px;
-        }
-
-        .recent-list {
-            gap: 9px;
-        }
-
-        .recent-card {
-            padding: 10px;
-        }
-
-        .recent-head {
-            gap: 8px;
-        }
-
-        .recent-user {
-            gap: 8px;
-        }
-
-        .recent-avatar {
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
-            font-size: 13px;
-        }
-
-        .recent-name {
-            font-size: 12px;
-        }
-
-        .recent-badge {
-            padding: 1px 6px;
-            font-size: 9.5px;
-        }
-
-        .recent-title {
-            font-size: 13px;
-            margin-top: 8px;
-        }
-
-        .recent-time,
-        .recent-footer,
-        .recent-stat {
-            font-size: 10px;
-        }
-
-        .delete {
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
-            font-size: 12px;
-        }
-
-        .recent-desc {
-            font-size: 11px;
-            margin-top: 6px;
-        }
-
-        .recent-tags {
-            gap: 5px;
-            margin-top: 8px;
-        }
-
-        .recent-footer {
-            margin-top: 9px;
-            padding-top: 8px;
-        }
-
-        .recent-stats {
-            gap: 7px;
-        }
-
-        .tag {
-            padding: 3px 7px;
-            font-size: 10px;
-        }
-
-        .empty {
-            padding: 16px 10px;
-            font-size: 12px;
-        }
-
-        .filter-tabs {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 8px;
-            margin-bottom: 12px;
-            padding: 4px;
-            border-radius: 12px;
-            background: #eef5f7;
-        }
-
-        .filter-tab {
-            min-height: 36px;
-            border-radius: 9px;
-            color: var(--muted);
-            background: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .filter-tab.active {
-            color: var(--primary);
-            background: #fff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-        }
-
-        @media (max-width: 360px) {
-            .actions {
-                align-items: stretch;
-                flex-direction: column;
-            }
-
-            .submit {
-                justify-content: center;
-                width: 100%;
-            }
-
-            .filter-tab {
-                font-size: 10.5px;
-                gap: 5px;
-                min-height: 30px;
-            }
-        }
-    </style>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>JAYPAY Panel</title>
+
+
+<style>
+
+/* ========================================
+   RESET
+======================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:#f5f9ff;
+
+    color:#172033;
+
+    min-height:100vh;
+
+    padding-bottom:100px;
+
+}
+
+button,
+input,
+select{
+
+    font-family:inherit;
+
+}
+
+
+/* ========================================
+   CONTAINER
+======================================== */
+
+.container{
+
+    width:92%;
+
+    max-width:1100px;
+
+    margin:auto;
+
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+.header{
+
+    background:#42A5F5;
+
+    color:white;
+
+    padding:20px 0;
+
+    border-radius:
+        0
+        0
+        24px
+        24px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(
+            66,
+            165,
+            245,
+            .20
+        );
+
+}
+
+
+.header-top{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+}
+
+
+.logo{
+
+    font-size:23px;
+
+    font-weight:800;
+
+    letter-spacing:.5px;
+
+}
+
+
+.balance-box{
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .16
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .20
+        );
+
+    padding:
+        9px
+        13px;
+
+    border-radius:12px;
+
+    font-size:12px;
+
+}
+
+
+/* ========================================
+   PAGE
+======================================== */
+
+.page{
+
+    display:none;
+
+    padding-top:28px;
+
+    animation:
+        pageIn
+        .20s
+        ease;
+
+}
+
+
+.page.active{
+
+    display:block;
+
+}
+
+
+@keyframes pageIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(5px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* ========================================
+   TITLE
+======================================== */
+
+.title{
+
+    margin-bottom:20px;
+
+}
+
+
+.title h1{
+
+    font-size:27px;
+
+}
+
+
+.title p{
+
+    color:#7c8798;
+
+    font-size:13px;
+
+    margin-top:6px;
+
+}
+
+
+/* ========================================
+   CATEGORY SWITCH
+======================================== */
+
+.panel-type{
+
+    display:flex;
+
+    gap:8px;
+
+    background:white;
+
+    padding:6px;
+
+    border:
+        1px solid
+        #e9eef4;
+
+    border-radius:15px;
+
+    margin-bottom:20px;
+
+}
+
+
+.type-btn{
+
+    flex:1;
+
+    border:0;
+
+    background:transparent;
+
+    color:#8791a0;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.type-btn:hover{
+
+    background:#f4f8fc;
+
+}
+
+
+.type-btn.active{
+
+    background:#42A5F5;
+
+    color:white;
+
+}
+
+
+/* ========================================
+   PANEL SECTION
+======================================== */
+
+.panel-section{
+
+    display:none;
+
+}
+
+
+.panel-section.active{
+
+    display:block;
+
+}
+
+
+/* ========================================
+   PRODUCTS
+======================================== */
+
+.products{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:18px;
+
+}
+
+
+.product{
+
+    background:white;
+
+    border:
+        1px solid
+        #e9eef4;
+
+    border-radius:20px;
+
+    padding:21px;
+
+    box-shadow:
+        0
+        8px
+        28px
+        rgba(
+            0,
+            0,
+            0,
+            .045
+        );
+
+    transition:.2s ease;
+
+}
+
+
+.product:hover{
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0
+        13px
+        32px
+        rgba(
+            0,
+            0,
+            0,
+            .08
+        );
+
+}
+
+
+.product h3{
+
+    font-size:18px;
+
+}
+
+
+.product-category{
+
+    display:inline-block;
+
+    background:#edf7ff;
+
+    color:#1976D2;
+
+    padding:
+        5px
+        9px;
+
+    border-radius:20px;
+
+    font-size:10px;
+
+    font-weight:bold;
+
+    margin-top:9px;
+
+}
+
+
+.desc{
+
+    color:#7c8798;
+
+    font-size:12px;
+
+    line-height:1.5;
+
+    margin-top:9px;
+
+}
+
+
+.price{
+
+    color:#42A5F5;
+
+    font-size:25px;
+
+    font-weight:800;
+
+    margin:
+        17px
+        0;
+
+}
+
+
+.price small{
+
+    color:#8993a3;
+
+    font-size:10px;
+
+    font-weight:normal;
+
+}
+
+
+.features{
+
+    list-style:none;
+
+    margin-bottom:18px;
+
+}
+
+
+.features li{
+
+    color:#596476;
+
+    font-size:12px;
+
+    padding:
+        5px
+        0;
+
+}
+
+
+.features li::before{
+
+    content:"✓";
+
+    color:#42A5F5;
+
+    font-weight:bold;
+
+    margin-right:7px;
+
+}
+
+
+/* ========================================
+   BUTTON
+======================================== */
+
+.buy{
+
+    width:100%;
+
+    border:0;
+
+    background:#42A5F5;
+
+    color:white;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.buy:hover{
+
+    background:#2196F3;
+
+}
+
+
+.buy:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+
+/* ========================================
+   EMPTY
+======================================== */
+
+.empty{
+
+    background:white;
+
+    border:
+        1px solid
+        #e9eef4;
+
+    padding:
+        45px
+        20px;
+
+    text-align:center;
+
+    border-radius:20px;
+
+    box-shadow:
+        0
+        7px
+        25px
+        rgba(
+            0,
+            0,
+            0,
+            .04
+        );
+
+}
+
+
+.empty h3{
+
+    font-size:17px;
+
+}
+
+
+.empty p{
+
+    color:#8993a3;
+
+    font-size:13px;
+
+    margin-top:7px;
+
+}
+
+
+/* ========================================
+   TRANSACTION
+======================================== */
+
+.transaction{
+
+    background:white;
+
+    border:
+        1px solid
+        #e9eef4;
+
+    padding:18px;
+
+    border-radius:17px;
+
+    box-shadow:
+        0
+        7px
+        25px
+        rgba(
+            0,
+            0,
+            0,
+            .04
+        );
+
+    margin-bottom:12px;
+
+}
+
+
+.transaction-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+.transaction strong{
+
+    font-size:14px;
+
+}
+
+
+.transaction p{
+
+    color:#7c8798;
+
+    font-size:12px;
+
+    margin-top:7px;
+
+}
+
+
+.transaction-status{
+
+    padding:
+        5px
+        9px;
+
+    border-radius:20px;
+
+    font-size:10px;
+
+    font-weight:bold;
+
+}
+
+
+.status-success{
+
+    color:#16803c;
+
+    background:#e8f7ee;
+
+}
+
+
+.status-failed{
+
+    color:#b42318;
+
+    background:#fff0ee;
+
+}
+
+
+/* ========================================
+   PANEL SAYA
+======================================== */
+
+.panel-card{
+
+    background:white;
+
+    border:
+        1px solid
+        #e9eef4;
+
+    border-radius:20px;
+
+    padding:21px;
+
+    margin-bottom:15px;
+
+    box-shadow:
+        0
+        8px
+        28px
+        rgba(
+            0,
+            0,
+            0,
+            .045
+        );
+
+}
+
+
+.panel-head{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+}
+
+
+.panel-head h2{
+
+    font-size:19px;
+
+}
+
+
+.status-active{
+
+    color:#16803c;
+
+    background:#e8f7ee;
+
+    padding:
+        5px
+        9px;
+
+    border-radius:20px;
+
+    font-size:10px;
+
+    font-weight:bold;
+
+}
+
+
+.panel-info{
+
+    display:grid;
+
+    gap:10px;
+
+    margin-top:18px;
+
+}
+
+
+.info{
+
+    background:#f6f9fc;
+
+    padding:12px;
+
+    border-radius:11px;
+
+}
+
+
+.info span{
+
+    display:block;
+
+    color:#8993a3;
+
+    font-size:11px;
+
+    margin-bottom:4px;
+
+}
+
+
+.info strong{
+
+    color:#263246;
+
+    font-size:12px;
+
+    word-break:break-word;
+
+}
+
+
+.open-panel{
+
+    display:block;
+
+    text-align:center;
+
+    margin-top:17px;
+
+    background:#42A5F5;
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:11px;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+}
+
+
+/* ========================================
+   MODAL
+======================================== */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            .45
+        );
+
+    display:none;
+
+    align-items:flex-end;
+
+    justify-content:center;
+
+    z-index:999;
+
+}
+
+
+.modal.active{
+
+    display:flex;
+
+}
+
+
+.modal-box{
+
+    width:100%;
+
+    max-width:560px;
+
+    background:white;
+
+    border-radius:
+        25px
+        25px
+        0
+        0;
+
+    padding:25px;
+
+    animation:
+        slideUp
+        .25s
+        ease;
+
+}
+
+
+@keyframes slideUp{
+
+    from{
+
+        transform:
+            translateY(
+                100%
+            );
+
+    }
+
+    to{
+
+        transform:
+            translateY(
+                0
+            );
+
+    }
+
+}
+
+
+.modal-head{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+
+.modal-head h2{
+
+    font-size:20px;
+
+}
+
+
+.close{
+
+    width:35px;
+
+    height:35px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#f1f5f9;
+
+    cursor:pointer;
+
+    font-size:19px;
+
+}
+
+
+.form-group{
+
+    margin-bottom:15px;
+
+}
+
+
+.form-group label{
+
+    display:block;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    margin-bottom:7px;
+
+}
+
+
+.form-group input,
+.form-group select{
+
+    width:100%;
+
+    padding:13px;
+
+    border:
+        1px solid
+        #dce5ee;
+
+    border-radius:11px;
+
+    outline:none;
+
+    font-size:13px;
+
+}
+
+
+.form-group input:focus,
+.form-group select:focus{
+
+    border-color:#42A5F5;
+
+}
+
+
+.purchase-info{
+
+    background:#f5f9fd;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    margin-bottom:16px;
+
+    font-size:12px;
+
+}
+
+
+.purchase-info strong{
+
+    color:#42A5F5;
+
+}
+
+
+/* ========================================
+   NAVIGATION
+======================================== */
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:12px;
+
+    left:50%;
+
+    transform:
+        translateX(
+            -50%
+        );
+
+    width:92%;
+
+    max-width:600px;
+
+    background:white;
+
+    border:
+        1px solid
+        #e9eef4;
+
+    border-radius:20px;
+
+    padding:7px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:5px;
+
+    box-shadow:
+        0
+        10px
+        35px
+        rgba(
+            0,
+            0,
+            0,
+            .13
+        );
+
+    z-index:100;
+
+}
+
+
+.nav-btn{
+
+    border:0;
+
+    background:transparent;
+
+    color:#8993a3;
+
+    padding:12px 5px;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+
+.nav-btn.active{
+
+    background:#e8f4ff;
+
+    color:#1976D2;
+
+}
+
+
+/* ========================================
+   LOADING
+======================================== */
+
+.loading{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .75
+        );
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:2000;
+
+}
+
+
+.loading.active{
+
+    display:flex;
+
+}
+
+
+.loading-box{
+
+    background:white;
+
+    padding:22px 28px;
+
+    border-radius:16px;
+
+    box-shadow:
+        0
+        10px
+        35px
+        rgba(
+            0,
+            0,
+            0,
+            .12
+        );
+
+    font-size:13px;
+
+}
+
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media(max-width:800px){
+
+    .products{
+
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
+
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .container{
+
+        width:91%;
+
+    }
+
+
+    .products{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .title h1{
+
+        font-size:24px;
+
+    }
+
+
+    .header{
+
+        border-radius:
+            0
+            0
+            20px
+            20px;
+
+    }
+
+
+    .modal{
+
+        align-items:flex-end;
+
+    }
+
+
+    .modal-box{
+
+        padding:22px;
+
+    }
+
+}
+
+
+@media(min-width:601px){
+
+    .modal{
+
+        align-items:center;
+
+        padding:20px;
+
+    }
+
+
+    .modal-box{
+
+        border-radius:22px;
+
+    }
+
+}
+
+</style>
+
 </head>
 
+
 <body>
-    <div class="app">
-        <header class="header">
-            <div class="header-top">
-                <button class="icon" type="button" id="backButton" aria-label="Kembali">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
-                <div class="header-title">Input Informasi</div>
-                <button class="icon" type="button" id="resetButton" aria-label="Kosongkan form">
-                    <i class="fa-solid fa-rotate-left"></i>
-                </button>
-            </div>
-        </header>
 
-        <main class="content">
-            <section class="panel">
-                <div class="panel-title">Tambah Informasi Baru</div>
 
-                <form id="infoForm">
-                    <div class="mode-tabs" aria-label="Pilih jenis input">
-                        <button class="mode-tab active" type="button" data-mode="info">
-                            <i class="fa-regular fa-newspaper"></i>
-                            Informasi
-                        </button>
-                        <button class="mode-tab" type="button" data-mode="harga">
-                            <i class="fa-solid fa-tags"></i>
-                            Update Harga
-                        </button>
-                    </div>
+<!-- =====================================
+     LOADING
+===================================== -->
 
-                    <div class="form-grid">
-                        <div class="field">
-                            <label for="nama">Nama Pengirim</label>
-                            <input id="nama" name="nama" type="text" value="Mimin" autocomplete="name" required />
-                        </div>
+<div
+    class="loading"
+    id="loading">
 
-                        <div class="field">
-                            <label for="badge">Badge</label>
-                            <input id="badge" name="badge" type="text" value="CodingSeru" required />
-                        </div>
-
-                        <div class="field" data-info-field>
-                            <label for="judul">Judul</label>
-                            <input id="judul" name="judul" type="text" placeholder="Judul informasi" required />
-                        </div>
-
-                        <div class="field" data-info-field>
-                            <label for="deskripsi">Isi Informasi</label>
-                            <textarea id="deskripsi" name="deskripsi" placeholder="Tulis isi informasi..."
-                                required></textarea>
-                        </div>
-
-                        <div class="field" data-price-field hidden>
-                            <label for="judulHarga">Judul Update Harga</label>
-                            <input id="judulHarga" name="judulHarga" type="text" value="Update Harga Barang" />
-                        </div>
-
-                        <div class="field" data-price-field hidden>
-                            <label for="formatHarga">Format Update Harga</label>
-                            <textarea class="price-format" id="formatHarga" name="formatHarga"
-                                placeholder="Nama Produk | Kode Produk | Harga Awal | Harga Update&#10;Kopi Susu | KS001 | 12000 | 15000&#10;Roti Bakar | RB002 | 18000 | 16000"></textarea>
-                        </div>
-
-                        <div class="field">
-                            <label for="tags">Tag</label>
-                            <input id="tags" name="tags" type="text" value="codingseru2023, update" />
-                        </div>
-                    </div>
-
-                    <div class="price-preview" id="pricePreview" hidden>
-                        <div class="price-preview-empty">Tulis data harga untuk melihat preview tabel otomatis.</div>
-                    </div>
-
-                    <div class="actions">
-                        <div class="message" id="message"></div>
-                        <button class="submit" id="submitButton" type="submit">
-                            <i class="fa-solid fa-paper-plane"></i>
-                            Kirim
-                        </button>
-                    </div>
-                </form>
-            </section>
-
-            <div class="section-title">
-                <span>Informasi Terbaru</span>
-                <small>Realtime</small>
-            </div>
-
-            <div class="filter-tabs" id="filterTabs">
-                <button class="filter-tab active" type="button" data-filter="info">
-                    <i class="fa-regular fa-newspaper"></i> Informasi
-                </button>
-            </div>
-
-            <div class="recent-list" id="recentList">
-                <div class="empty">Memuat data...</div>
-            </div>
-        </main>
+    <div class="loading-box">
+        Memproses transaksi...
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+</div>
 
-    <script>
-        var firebaseConfig = {
-           apiKey: "AIzaSyDnGw62OO0O87yhj67OS5Xz-Y0meieMmIM",
-  authDomain: "jaypay-a890d.firebaseapp.com",
-  databaseURL: "https://jaypay-a890d-default-rtdb.firebaseio.com",
-  projectId: "jaypay-a890d",
-  storageBucket: "jaypay-a890d.firebasestorage.app",
-  messagingSenderId: "451149735249",
-  appId: "1:451149735249:web:3b1455484d67ccd4d29f70"
+
+<!-- =====================================
+     HEADER
+===================================== -->
+
+<header class="header">
+
+    <div class="container">
+
+        <div class="header-top">
+
+            <div class="logo">
+                JAYPAY
+            </div>
+
+
+            <div
+                class="balance-box"
+                id="balance">
+
+                Saldo API: Rp0
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- =====================================
+     LIST PANEL
+===================================== -->
+
+<section
+    class="page active"
+    id="listPanel">
+
+
+    <div class="title">
+
+        <h1>
+            List Panel
+        </h1>
+
+        <p>
+            Pilih panel umum atau private.
+        </p>
+
+    </div>
+
+
+    <div class="panel-type">
+
+        <button
+            class="type-btn active"
+            onclick="
+                showPanelType(
+                    'umum',
+                    this
+                )
+            ">
+
+            Panel Umum
+
+        </button>
+
+
+        <button
+            class="type-btn"
+            onclick="
+                showPanelType(
+                    'private',
+                    this
+                )
+            ">
+
+            Panel Private
+
+        </button>
+
+    </div>
+
+
+    <!-- PANEL UMUM -->
+
+    <div
+        id="panelUmum"
+        class="panel-section active">
+
+        <div
+            id="productsUmum"
+            class="products">
+
+            <div class="empty">
+
+                <h3>
+                    Memuat produk
+                </h3>
+
+                <p>
+                    Mengambil produk panel umum...
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PANEL PRIVATE -->
+
+    <div
+        id="panelPrivate"
+        class="panel-section">
+
+        <div
+            id="productsPrivate"
+            class="products">
+
+            <div class="empty">
+
+                <h3>
+                    Memuat produk
+                </h3>
+
+                <p>
+                    Mengambil produk panel private...
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================
+     TRANSACTION
+===================================== -->
+
+<section
+    class="page"
+    id="transaction">
+
+
+    <div class="title">
+
+        <h1>
+            Transaction
+        </h1>
+
+        <p>
+            Riwayat transaksi pembelian panel.
+        </p>
+
+    </div>
+
+
+    <div id="transactionList">
+
+        <div class="empty">
+
+            <h3>
+                Memuat transaksi
+            </h3>
+
+            <p>
+                Mengambil riwayat transaksi...
+            </p>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================
+     PANEL SAYA
+===================================== -->
+
+<section
+    class="page"
+    id="panelSaya">
+
+
+    <div class="title">
+
+        <h1>
+            Panel Saya
+        </h1>
+
+        <p>
+            Panel yang berhasil dibuat.
+        </p>
+
+    </div>
+
+
+    <div id="myPanels">
+
+        <div class="empty">
+
+            <h3>
+                Belum ada panel
+            </h3>
+
+            <p>
+                Panel yang berhasil dibeli
+                akan muncul di sini.
+            </p>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+</main>
+
+
+<!-- =====================================
+     BOTTOM NAV
+===================================== -->
+
+<nav class="bottom-nav">
+
+
+    <button
+        class="nav-btn active"
+        onclick="
+            showPage(
+                'listPanel',
+                this
+            )
+        ">
+
+        List Panel
+
+    </button>
+
+
+    <button
+        class="nav-btn"
+        onclick="
+            showPage(
+                'transaction',
+                this
+            )
+        ">
+
+        Transaction
+
+    </button>
+
+
+    <button
+        class="nav-btn"
+        onclick="
+            showPage(
+                'panelSaya',
+                this
+            )
+        ">
+
+        Panel Saya
+
+    </button>
+
+
+</nav>
+
+
+<!-- =====================================
+     BUY MODAL
+===================================== -->
+
+<div
+    class="modal"
+    id="buyModal">
+
+
+    <div class="modal-box">
+
+
+        <div class="modal-head">
+
+            <h2>
+                Beli Panel
+            </h2>
+
+
+            <button
+                class="close"
+                onclick="closeBuy()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div class="purchase-info">
+
+            Produk:
+
+            <strong id="selectedProduct">
+                -
+            </strong>
+
+            <br><br>
+
+            Harga:
+
+            <strong id="selectedPrice">
+                Rp0
+            </strong>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Email Member BukaOlshop
+            </label>
+
+            <input
+                id="emailUser"
+                type="email"
+                placeholder="emailmember@gmail.com">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Nama Panel
+            </label>
+
+            <input
+                id="panelName"
+                type="text"
+                placeholder="Contoh: Jaypay Bot">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Nomor WhatsApp
+            </label>
+
+            <input
+                id="whatsapp"
+                type="text"
+                placeholder="628xxxxxxxxxx">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Server Type
+            </label>
+
+            <select id="serverType">
+
+                <option value="">
+                    Otomatis
+                </option>
+
+                <option value="whatsapp">
+                    WhatsApp
+                </option>
+
+                <option value="nodejs">
+                    Node.js
+                </option>
+
+                <option value="minecraft">
+                    Minecraft
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="buy"
+            id="buyButton"
+            onclick="processPurchase()">
+
+            Beli Sekarang
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==================================================
+   CONFIGURATION
+================================================== */
+
+
+/*
+    BUKAOLSHOP
+
+    Masukkan CLOSED API KEY kamu.
+*/
+
+const BUKAOLSHOP = {
+
+    apiUrl:
+        "https://bukaolshop.net/api/v1/member/saldo",
+
+    apiKey:
+        "SG5mMldOWDNBNXFMYlNWRnFySlNsRUcxY3h5K1o2RHlaaURhRGJxYS91NkpVRk1maUZ1dU93dEFsU3MzVDlPU0NkWElad3V0VmFmaVV5Wk9mV3I2TVFlOUttS1B0dCtBeHFzY3c1U0Q0cFdENW95NVo3bHJmU2Z1dUdMT3NzYXBsRjZWT2pXTUowMzBldjV0ZGNWaGhIaHFDK20xMmRhOTVWY1JJVGowNnVNK3R0dkNnVHNLYVB2ZDIyV1hHKzFR"
+
+};
+
+
+/*
+    PERKASA HOSTING
+
+    Project dan API Key harus berasal
+    dari Project yang sama.
+*/
+
+const PERKASA = {
+
+    baseUrl:
+        "https://perkasa-hosting.web.id/api/v1",
+
+    project:
+        "HAWIYA",
+
+    apiKey:
+        "PH_LIVE_40AACD8C95CBDB6E3E2325D83B76DC7C"
+
+};
+
+
+/* ==================================================
+   GLOBAL
+================================================== */
+
+let selectedProduct = null;
+
+
+/* ==================================================
+   PAGE NAVIGATION
+================================================== */
+
+function showPage(
+    pageId,
+    button
+){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(
+            page => {
+
+                page.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    const page =
+        document.getElementById(
+            pageId
+        );
+
+
+    if(page){
+
+        page.classList.add(
+            "active"
+        );
+
+    }
+
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(
+            btn => {
+
+                btn.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+
+    if(
+        pageId ===
+        "transaction"
+    ){
+
+        loadTransactions();
+
+    }
+
+
+    if(
+        pageId ===
+        "panelSaya"
+    ){
+
+        loadMyPanels();
+
+    }
+
+}
+
+
+/* ==================================================
+   PANEL CATEGORY
+================================================== */
+
+function showPanelType(
+    type,
+    button
+){
+
+    document
+        .querySelectorAll(".type-btn")
+        .forEach(
+            btn => {
+
+                btn.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    document
+        .querySelectorAll(".panel-section")
+        .forEach(
+            section => {
+
+                section.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    if(type === "umum"){
+
+        document
+            .getElementById(
+                "panelUmum"
+            )
+            .classList.add(
+                "active"
+            );
+
+    }
+
+
+    if(type === "private"){
+
+        document
+            .getElementById(
+                "panelPrivate"
+            )
+            .classList.add(
+                "active"
+            );
+
+    }
+
+}
+
+
+/* ==================================================
+   PERKASA REQUEST
+================================================== */
+
+async function perkasaRequest(
+    endpoint,
+    options = {}
+){
+
+    const response =
+        await fetch(
+
+            PERKASA.baseUrl +
+            endpoint,
+
+            {
+
+                ...options,
+
+                headers:{
+
+                    "X-Project":
+                        PERKASA.project,
+
+                    "Authorization":
+                        "Bearer " +
+                        PERKASA.apiKey,
+
+                    "Content-Type":
+                        "application/json",
+
+                    ...(options.headers || {})
+
+                }
+
+            }
+
+        );
+
+
+    let data;
+
+
+    try{
+
+        data =
+            await response.json();
+
+    }
+
+    catch{
+
+        throw new Error(
+            "Response Perkasa tidak valid."
+        );
+
+    }
+
+
+    if(
+        !response.ok
+    ){
+
+        throw new Error(
+
+            data.message ||
+            "Request Perkasa gagal. HTTP " +
+            response.status
+
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+/* ==================================================
+   LOAD PRODUCTS
+================================================== */
+
+async function loadProducts(){
+
+    const umum =
+        document.getElementById(
+            "productsUmum"
+        );
+
+
+    const privateBox =
+        document.getElementById(
+            "productsPrivate"
+        );
+
+
+    try{
+
+        const result =
+            await perkasaRequest(
+                "/products"
+            );
+
+
+        if(
+            result.status !==
+            "success"
+        ){
+
+            throw new Error(
+                result.message ||
+                "Produk gagal dimuat."
+            );
+
+        }
+
+
+        const products =
+            Array.isArray(
+                result.data
+            )
+            ?
+            result.data
+            :
+            [];
+
+
+        /*
+            HANYA:
+            umum
+            private
+
+            Admin dan Owner
+            otomatis dibuang.
+        */
+
+        const umumProducts =
+            products.filter(
+                product =>
+
+                    product.status ===
+                    "active"
+
+                    &&
+
+                    String(
+                        product.category
+                    ).toLowerCase()
+                    ===
+                    "umum"
+
+            );
+
+
+        const privateProducts =
+            products.filter(
+                product =>
+
+                    product.status ===
+                    "active"
+
+                    &&
+
+                    String(
+                        product.category
+                    ).toLowerCase()
+                    ===
+                    "private"
+
+            );
+
+
+        renderProducts(
+            umum,
+            umumProducts
+        );
+
+
+        renderProducts(
+            privateBox,
+            privateProducts
+        );
+
+
+    }
+
+    catch(error){
+
+        showProductError(
+            umum,
+            error.message
+        );
+
+
+        showProductError(
+            privateBox,
+            error.message
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   RENDER PRODUCTS
+================================================== */
+
+function renderProducts(
+    container,
+    products
+){
+
+    if(
+        !products.length
+    ){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    Produk tidak tersedia
+                </h3>
+
+                <p>
+                    Belum ada produk aktif.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    products.forEach(
+        product => {
+
+
+            /*
+                SECURITY FILTER TAMBAHAN
+
+                Kalau suatu saat API mengirim
+                Admin / Owner ke frontend,
+                tetap tidak ditampilkan.
+            */
+
+            const productId =
+                String(
+                    product.product_id ||
+                    ""
+                ).toUpperCase();
+
+
+            if(
+                productId.includes(
+                    "ADMIN"
+                )
+
+                ||
+
+                productId.includes(
+                    "OWNER"
+                )
+
+                ||
+
+                String(
+                    product.name ||
+                    ""
+                ).toLowerCase()
+                .includes(
+                    "admin"
+                )
+
+                ||
+
+                String(
+                    product.name ||
+                    ""
+                ).toLowerCase()
+                .includes(
+                    "owner"
+                )
+            ){
+
+                return;
+
+            }
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "product";
+
+
+            card.innerHTML = `
+
+                <h3>
+
+                    ${escapeHtml(
+                        product.name ||
+                        "Panel"
+                    )}
+
+                </h3>
+
+
+                <span
+                    class="product-category">
+
+                    ${escapeHtml(
+                        product.category
+                    )}
+
+                </span>
+
+
+                <div class="desc">
+
+                    Periode:
+
+                    ${escapeHtml(
+                        product.billing_period ||
+                        "monthly"
+                    )}
+
+                </div>
+
+
+                <div class="price">
+
+                    Rp${formatRupiah(
+                        product.price
+                    )}
+
+                    <small>
+                        / bulan
+                    </small>
+
+                </div>
+
+
+                <ul class="features">
+
+                    <li>
+                        RAM:
+                        ${escapeHtml(
+                            product.ram ||
+                            "-"
+                        )}
+                    </li>
+
+
+                    <li>
+                        CPU:
+                        ${escapeHtml(
+                            product.cpu ||
+                            "-"
+                        )}
+                    </li>
+
+
+                    <li>
+                        Disk:
+                        ${escapeHtml(
+                            product.disk ||
+                            "-"
+                        )}
+                    </li>
+
+
+                    <li>
+                        Product ID:
+                        ${escapeHtml(
+                            product.product_id ||
+                            "-"
+                        )}
+                    </li>
+
+                </ul>
+
+
+                <button
+                    class="buy"
+                    onclick="openBuy(
+                        '${escapeJs(
+                            product.product_id
+                        )}',
+                        '${escapeJs(
+                            product.name
+                        )}',
+                        ${Number(
+                            product.price ||
+                            0
+                        )}
+                    )">
+
+                    Beli Sekarang
+
+                </button>
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   PRODUCT ERROR
+================================================== */
+
+function showProductError(
+    container,
+    message
+){
+
+    container.innerHTML = `
+
+        <div class="empty">
+
+            <h3>
+                Gagal memuat produk
+            </h3>
+
+            <p>
+                ${escapeHtml(
+                    message
+                )}
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==================================================
+   OPEN BUY
+================================================== */
+
+function openBuy(
+    productId,
+    productName,
+    price
+){
+
+    selectedProduct = {
+
+        id:
+            productId,
+
+        name:
+            productName,
+
+        price:
+            Number(price)
+
+    };
+
+
+    document.getElementById(
+        "selectedProduct"
+    ).textContent =
+        productName;
+
+
+    document.getElementById(
+        "selectedPrice"
+    ).textContent =
+        "Rp" +
+        formatRupiah(
+            price
+        );
+
+
+    document.getElementById(
+        "buyModal"
+    ).classList.add(
+        "active"
+    );
+
+}
+
+
+/* ==================================================
+   CLOSE BUY
+================================================== */
+
+function closeBuy(){
+
+    document.getElementById(
+        "buyModal"
+    ).classList.remove(
+        "active"
+    );
+
+}
+
+
+/* ==================================================
+   CEK SALDO BUKAOLSHOP
+================================================== */
+
+async function cekSaldoBukaOlshop(
+    emailUser
+){
+
+    /*
+        Endpoint saldo yang kamu berikan.
+
+        Jika dokumentasi BukaOlshop yang kamu
+        gunakan memiliki endpoint GET saldo
+        terpisah, sesuaikan fungsi ini.
+    */
+
+    const response =
+        await fetch(
+
+            BUKAOLSHOP.apiUrl,
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Authorization":
+                        "Bearer " +
+                        BUKAOLSHOP.apiKey,
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        email_user:
+                            emailUser,
+
+                        tipe:
+                            "cek"
+
+                    })
+
+            }
+
+        );
+
+
+    let data;
+
+
+    try{
+
+        data =
+            await response.json();
+
+    }
+
+    catch{
+
+        throw new Error(
+            "Response BukaOlshop tidak valid."
+        );
+
+    }
+
+
+    if(
+        !response.ok
+    ){
+
+        throw new Error(
+
+            data.message ||
+            "Gagal mengecek saldo BukaOlshop."
+
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+/* ==================================================
+   POTONG SALDO BUKAOLSHOP
+================================================== */
+
+async function potongSaldoBukaOlshop(
+    emailUser,
+    jumlah
+){
+
+    const response =
+        await fetch(
+
+            BUKAOLSHOP.apiUrl,
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Authorization":
+                        "Bearer " +
+                        BUKAOLSHOP.apiKey,
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        email_user:
+                            emailUser,
+
+                        tipe:
+                            "kurang",
+
+                        jumlah:
+                            Number(jumlah),
+
+                        notifikasi:
+                            true
+
+                    })
+
+            }
+
+        );
+
+
+    let data;
+
+
+    try{
+
+        data =
+            await response.json();
+
+    }
+
+    catch{
+
+        throw new Error(
+            "Response potong saldo BukaOlshop tidak valid."
+        );
+
+    }
+
+
+    if(
+        !response.ok
+    ){
+
+        throw new Error(
+
+            data.message ||
+            "Saldo BukaOlshop gagal dipotong."
+
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+/* ==================================================
+   PROSES PEMBELIAN
+================================================== */
+
+async function processPurchase(){
+
+    if(
+        !selectedProduct
+    ){
+
+        alert(
+            "Produk belum dipilih."
+        );
+
+        return;
+
+    }
+
+
+    const emailUser =
+        document.getElementById(
+            "emailUser"
+        ).value.trim();
+
+
+    const panelName =
+        document.getElementById(
+            "panelName"
+        ).value.trim();
+
+
+    const whatsapp =
+        document.getElementById(
+            "whatsapp"
+        ).value.trim();
+
+
+    const serverType =
+        document.getElementById(
+            "serverType"
+        ).value;
+
+
+    if(!emailUser){
+
+        alert(
+            "Email BukaOlshop wajib diisi."
+        );
+
+        return;
+
+    }
+
+
+    if(!panelName){
+
+        alert(
+            "Nama panel wajib diisi."
+        );
+
+        return;
+
+    }
+
+
+    if(!whatsapp){
+
+        alert(
+            "Nomor WhatsApp wajib diisi."
+        );
+
+        return;
+
+    }
+
+
+    const harga =
+        Number(
+            selectedProduct.price
+        );
+
+
+    if(
+        !Number.isFinite(
+            harga
+        )
+        ||
+        harga <= 0
+    ){
+
+        alert(
+            "Harga produk tidak valid."
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "buyButton"
+        );
+
+
+    button.disabled =
+        true;
+
+
+    button.textContent =
+        "Memproses...";
+
+
+    showLoading(
+        true
+    );
+
+
+    try{
+
+        /*
+            STEP 1
+
+            Potong saldo BukaOlshop.
+        */
+
+        const saldoResult =
+            await potongSaldoBukaOlshop(
+
+                emailUser,
+
+                harga
+
+            );
+
+
+        /*
+            STEP 2
+
+            Jika BukaOlshop sukses,
+            create panel Perkasa.
+        */
+
+        const payload = {
+
+            product_id:
+                selectedProduct.id,
+
+            panel_name:
+                panelName,
+
+            whatsapp:
+                whatsapp
+
         };
 
-        firebase.initializeApp(firebaseConfig);
 
-        var database = firebase.database();
-        var infoRef = database.ref("informasi");
-        var infoForm = document.getElementById("infoForm");
-        var submitButton = document.getElementById("submitButton");
-        var message = document.getElementById("message");
-        var recentList = document.getElementById("recentList");
-        var backButton = document.getElementById("backButton");
-        var resetButton = document.getElementById("resetButton");
-        var modeButtons = Array.prototype.slice.call(document.querySelectorAll("[data-mode]"));
-        var infoFields = Array.prototype.slice.call(document.querySelectorAll("[data-info-field]"));
-        var priceFields = Array.prototype.slice.call(document.querySelectorAll("[data-price-field]"));
-        var judulInput = document.getElementById("judul");
-        var deskripsiInput = document.getElementById("deskripsi");
-        var tagsInput = document.getElementById("tags");
-        var formatHargaInput = document.getElementById("formatHarga");
-        var judulHargaInput = document.getElementById("judulHarga");
-        var pricePreview = document.getElementById("pricePreview");
-        var lastRecentItems = [];
-        var activeMode = "info";
-        var activeFilter = "info";
-        var RECENT_REFRESH_INTERVAL = 1000;
+        if(serverType){
 
-        var filterTabs = document.getElementById("filterTabs");
-        var filterButtons = Array.prototype.slice.call(filterTabs.querySelectorAll("[data-filter]"));
+            payload.server_type =
+                serverType;
 
-        filterButtons.forEach(function (button) {
-            button.addEventListener("click", function () {
-                activeFilter = button.getAttribute("data-filter");
-                filterButtons.forEach(function (btn) {
-                    btn.classList.toggle("active", btn.getAttribute("data-filter") === activeFilter);
-                });
-                renderRecent(lastRecentItems);
-            });
-        });
+        }
 
-        backButton.addEventListener("click", function () {
-            if (history.length > 1) {
-                history.back();
-                return;
-            }
 
-            location.href = "Untitled-1.html";
-        });
+        const panelResult =
+            await perkasaRequest(
 
-        resetButton.addEventListener("click", function () {
-            resetForm();
-            setMessage("");
-        });
+                "/panel/create",
 
-        modeButtons.forEach(function (button) {
-            button.addEventListener("click", function () {
-                setMode(button.getAttribute("data-mode"));
-            });
-        });
+                {
 
-        formatHargaInput.addEventListener("input", function () {
-            updatePricePreview();
-        });
+                    method:"POST",
 
-        infoForm.addEventListener("submit", function (event) {
-            event.preventDefault();
+                    body:
+                        JSON.stringify(
+                            payload
+                        )
 
-            var formData = new FormData(infoForm);
-            var nama = cleanText(formData.get("nama"));
-            var badge = cleanText(formData.get("badge"));
-            var tags = parseTags(formData.get("tags"));
-            var judul = "";
-            var deskripsi = "";
-            var priceRows = [];
-
-            if (activeMode === "harga") {
-                priceRows = parsePriceRows(formatHargaInput.value);
-
-                if (!priceRows.length) {
-                    setMessage("Isi minimal satu baris harga yang valid.", true);
-                    return;
                 }
 
-                judul = cleanText(judulHargaInput.value) || "Update Harga Barang";
-                deskripsi = buildPriceDescription(priceRows);
-                tags = tags.length ? tags : ["update-harga"];
-            } else {
-                judul = cleanText(formData.get("judul"));
-                deskripsi = cleanText(formData.get("deskripsi"));
+            );
 
-                if (!judul || !deskripsi) {
-                    setMessage("Judul dan isi informasi wajib diisi.", true);
-                    return;
-                }
-            }
 
-            submitButton.disabled = true;
-            setMessage("Menyimpan informasi...");
+        if(
+            panelResult.status !==
+            "success"
+        ){
 
-            var now = Date.now();
-            var payload = {
-                nama: nama || "Mimin",
-                user: nama || "Mimin",
-                badge: badge || "CodingSeru",
-                judul: judul,
-                title: judul,
-                deskripsi: deskripsi,
-                konten: deskripsi,
-                tags: tags,
-                avatarUrl: "",
-                likes: 0,
-                komentar: 0,
-                comment: 0,
-                senyum: 0,
-                views: 0,
-                tanggal: formatDate(now),
-                createdAt: firebase.database.ServerValue.TIMESTAMP
-            };
+            throw new Error(
 
-            if (activeMode === "harga") {
-                payload.tipe = "update_harga";
-                payload.priceRows = priceRows;
-            }
+                panelResult.message ||
+                "Panel gagal dibuat."
 
-            infoRef.push(payload).then(function () {
-                resetForm();
-                setMessage("Informasi berhasil dikirim.");
-            }).catch(function (error) {
-                setMessage("Gagal menyimpan: " + error.message, true);
-            }).finally(function () {
-                submitButton.disabled = false;
-            });
+            );
+
+        }
+
+
+        const data =
+            panelResult.data ||
+            {};
+
+
+        /*
+            SIMPAN TRANSACTION
+        */
+
+        saveTransaction({
+
+            order_id:
+                data.order_id ||
+                "-",
+
+            product_id:
+                selectedProduct.id,
+
+            product:
+                selectedProduct.name,
+
+            category:
+                selectedProduct.category ||
+                "",
+
+            amount:
+                data.price_charged ||
+                harga,
+
+            email:
+                emailUser,
+
+            status:
+                "success",
+
+            created_at:
+                data.created_at ||
+                new Date()
+                .toISOString()
+
         });
 
-        recentList.addEventListener("click", function (event) {
-            var deleteButton = event.target.closest("[data-delete-id]");
 
-            if (!deleteButton) {
-                return;
-            }
+        /*
+            SIMPAN PANEL
+        */
 
-            var id = deleteButton.getAttribute("data-delete-id");
+        savePanel({
 
-            if (!id || !confirm("Hapus informasi ini?")) {
-                return;
-            }
+            order_id:
+                data.order_id ||
+                "-",
 
-            database.ref("informasi/" + id).remove().catch(function (error) {
-                setMessage("Gagal menghapus: " + error.message, true);
-            });
+            product_id:
+                data.product_id ||
+                selectedProduct.id,
+
+            product:
+                selectedProduct.name,
+
+            panel_name:
+                data.panel_name ||
+                panelName,
+
+            username:
+                data.username ||
+                "-",
+
+            whatsapp:
+                whatsapp,
+
+            panel_url:
+                data.panel_url ||
+                "",
+
+            status:
+                data.status ||
+                "active",
+
+            created_at:
+                data.created_at ||
+                new Date()
+                .toISOString()
+
         });
 
-        infoRef.orderByChild("createdAt").limitToLast(10).on("value", function (snapshot) {
-            var items = [];
 
-            snapshot.forEach(function (child) {
-                items.push({
-                    id: child.key,
-                    value: child.val() || {}
-                });
-            });
+        /*
+            UPDATE SALDO API
+        */
 
-            items.sort(function (a, b) {
-                return getCreatedAt(b.value) - getCreatedAt(a.value);
-            });
+        await loadBalance();
 
-            lastRecentItems = items;
-            renderRecent(items);
-        }, function (error) {
-            recentList.innerHTML = '<div class="empty">Data tidak bisa dibaca. Cek rules Firebase.</div>';
-            setMessage("Firebase error: " + error.message, true);
-        });
 
-        setInterval(function () {
-            if (lastRecentItems.length) {
-                renderRecent(lastRecentItems);
-            }
-        }, RECENT_REFRESH_INTERVAL);
+        /*
+            UPDATE DATA
+        */
 
-        function setMode(mode) {
-            activeMode = mode === "harga" ? "harga" : "info";
+        loadTransactions();
 
-            modeButtons.forEach(function (button) {
-                button.classList.toggle("active", button.getAttribute("data-mode") === activeMode);
-            });
+        loadMyPanels();
 
-            infoFields.forEach(function (field) {
-                field.hidden = activeMode !== "info";
-            });
 
-            priceFields.forEach(function (field) {
-                field.hidden = activeMode !== "harga";
-            });
+        closeBuy();
 
-            pricePreview.hidden = activeMode !== "harga";
-            judulInput.required = activeMode === "info";
-            deskripsiInput.required = activeMode === "info";
-            formatHargaInput.required = activeMode === "harga";
 
-            if (activeMode === "harga" && (!cleanText(tagsInput.value) || tagsInput.value === "codingseru2023, update")) {
-                tagsInput.value = "update-harga, harga-barang";
-            }
+        clearForm();
 
-            if (activeMode === "info" && tagsInput.value === "update-harga, harga-barang") {
-                tagsInput.value = "codingseru2023, update";
-            }
 
-            updatePricePreview();
-            setMessage("");
+        /*
+            BUKA PANEL SAYA
+        */
+
+        const panelButton =
+            document.querySelectorAll(
+                ".nav-btn"
+            )[2];
+
+
+        showPage(
+
+            "panelSaya",
+
+            panelButton
+
+        );
+
+
+        alert(
+            "Panel berhasil dibuat."
+        );
+
+
+    }
+
+    catch(error){
+
+        /*
+            Jika create panel gagal
+            setelah saldo BukaOlshop
+            sudah terpotong, jangan pura-pura
+            menganggap transaksi berhasil.
+
+            Refund harus dilakukan melalui
+            mekanisme refund/topup BukaOlshop
+            yang memang tersedia pada akun/API kamu.
+        */
+
+        alert(
+
+            "Transaksi gagal:\n\n" +
+            error.message
+
+        );
+
+    }
+
+    finally{
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            "Beli Sekarang";
+
+
+        showLoading(
+            false
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   LOAD BALANCE PERKASA
+================================================== */
+
+async function loadBalance(){
+
+    try{
+
+        const result =
+            await perkasaRequest(
+                "/balance"
+            );
+
+
+        if(
+            result.status !==
+            "success"
+        ){
+
+            return;
+
         }
 
-        function updatePricePreview() {
-            if (activeMode !== "harga") {
-                return;
-            }
 
-            var rows = parsePriceRows(formatHargaInput.value);
+        const balance =
+            result.data &&
+            result.data.balance
+            ?
+            result.data.balance
+            :
+            0;
 
-            if (!rows.length) {
-                pricePreview.innerHTML = '<div class="price-preview-empty">Tulis data harga untuk melihat preview tabel otomatis.</div>';
-                return;
-            }
 
-            pricePreview.innerHTML = renderPriceTable(rows);
+        document.getElementById(
+            "balance"
+        ).textContent =
+
+            "Saldo API: Rp" +
+            formatRupiah(
+                balance
+            );
+
+    }
+
+    catch(error){
+
+        document.getElementById(
+            "balance"
+        ).textContent =
+            "Saldo API: -";
+
+        console.log(
+            "Balance error:",
+            error.message
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   LOAD TRANSACTIONS
+================================================== */
+
+async function loadTransactions(){
+
+    const container =
+        document.getElementById(
+            "transactionList"
+        );
+
+
+    try{
+
+        const result =
+            await perkasaRequest(
+                "/transactions"
+            );
+
+
+        if(
+            result.status !==
+            "success"
+        ){
+
+            throw new Error(
+                result.message ||
+                "Gagal mengambil transaksi."
+            );
+
         }
 
-        function renderRecent(items) {
-            var filteredItems = items.filter(function(item) {
-                var isHarga = item.value.tipe === "update_harga" || (item.value.priceRows && item.value.priceRows.length > 0);
-                if (activeFilter === "info") return !isHarga;
-                if (activeFilter === "harga") return isHarga;
-                return true;
-            });
 
-            if (!filteredItems.length) {
-                recentList.innerHTML = '<div class="empty">Belum ada informasi.</div>';
-                return;
-            }
+        const transactions =
+            Array.isArray(
+                result.data
+            )
+            ?
+            result.data
+            :
+            [];
 
-            recentList.innerHTML = filteredItems.map(function (item) {
-                var data = item.value;
-                var nama = pick(data, ["nama", "user", "name", "author"]) || "Mimin";
-                var badge = pick(data, ["badge", "label"]) || "CodingSeru";
-                var title = pick(data, ["judul", "title"]) || "Informasi";
-                var desc = pick(data, ["deskripsi", "konten", "description", "desc"]) || "-";
-                var priceRows = normalizePriceRows(pick(data, ["priceRows", "hargaRows", "prices"]));
-                var avatarUrl = safeImageUrl(pick(data, ["avatarUrl", "avatar", "photo"]));
-                var tags = normalizeTags(pick(data, ["tags", "tag"]));
-                var likes = toNumber(pick(data, ["likes", "like", "suka"]));
-                var komentar = toNumber(pick(data, ["komentar", "comments", "comment"]));
-                var senyum = toNumber(pick(data, ["senyum", "smiles", "smile"]));
-                var views = toNumber(pick(data, ["views", "dilihat", "view"]));
-                var time = timeAgo(getCreatedAt(data));
-                var avatar = avatarUrl
-                    ? '<img src="' + escapeAttribute(avatarUrl) + '" alt="' + escapeAttribute(nama) + '" />'
-                    : '<i class="fa-solid fa-store"></i>';
 
-                return [
-                    '<article class="recent-card">',
-                    '    <div class="recent-head">',
-                    '        <div class="recent-user">',
-                    '            <div class="recent-avatar">' + avatar + '</div>',
-                    '            <div class="recent-meta">',
-                    '                <div class="recent-name">' + escapeHtml(nama) + '<span class="recent-badge">' + escapeHtml(badge) + '</span></div>',
-                    '                <div class="recent-time">' + escapeHtml(time) + '</div>',
-                    '            </div>',
-                    '        </div>',
-                    '        <button class="delete" type="button" data-delete-id="' + escapeAttribute(item.id) + '" aria-label="Hapus informasi">',
-                    '            <i class="fa-regular fa-trash-can"></i>',
-                    '        </button>',
-                    '    </div>',
-                    '    <div class="recent-title">' + escapeHtml(title) + '</div>',
-                    priceRows.length ? renderPriceTable(priceRows) : '    <div class="recent-desc">' + escapeHtml(limitText(desc, 120)) + '</div>',
-                    '    <div class="recent-tags">' + renderTags(tags) + '</div>',
-                    '    <div class="recent-footer">',
-                    '        <div class="recent-stats">',
-                    '            <span class="recent-stat"><i class="fa-regular fa-heart"></i>' + formatCount(likes) + '</span>',
-                    '            <span class="recent-stat"><i class="fa-regular fa-comment"></i>' + formatCount(komentar) + '</span>',
-                    '            <span class="recent-stat"><i class="fa-regular fa-face-smile"></i>' + formatCount(senyum) + '</span>',
-                    '        </div>',
-                    '        <span class="recent-stat"><i class="fa-regular fa-eye"></i>' + formatCount(views) + ' dilihat</span>',
-                    '    </div>',
-                    '</article>'
-                ].join("");
-            }).join("");
+        if(
+            !transactions.length
+        ){
+
+            container.innerHTML = `
+
+                <div class="empty">
+
+                    <h3>
+                        Belum ada transaksi
+                    </h3>
+
+                    <p>
+                        Riwayat transaksi
+                        akan muncul di sini.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
         }
 
-        function resetForm() {
-            infoForm.reset();
-            document.getElementById("nama").value = "Mimin";
-            document.getElementById("badge").value = "CodingSeru";
-            tagsInput.value = "codingseru2023, update";
-            formatHargaInput.value = "";
-            judulHargaInput.value = "Update Harga Barang";
-            setMode("info");
-        }
 
-        function parsePriceRows(value) {
-            return String(value || "")
-                .split(/\r?\n/)
-                .map(cleanText)
-                .filter(Boolean)
-                .filter(function (line) {
-                    var lowerLine = line.toLowerCase();
-                    return !(lowerLine.includes("nama") && lowerLine.includes("kode") && lowerLine.includes("harga"));
-                })
-                .map(parsePriceLine)
-                .filter(Boolean);
-        }
+        container.innerHTML =
+            "";
 
-        function parsePriceLine(line) {
-            var parts = splitPriceLine(line);
 
-            if (parts.length < 4) {
-                return null;
+        transactions.forEach(
+            transaction => {
+
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "transaction";
+
+
+                const status =
+                    String(
+                        transaction.status ||
+                        ""
+                    ).toLowerCase();
+
+
+                const statusClass =
+                    status ===
+                    "success"
+
+                    ?
+                    "status-success"
+
+                    :
+                    "status-failed";
+
+
+                item.innerHTML = `
+
+                    <div
+                        class="transaction-row">
+
+                        <strong>
+
+                            ${escapeHtml(
+
+                                transaction.product_id ||
+                                "Panel"
+
+                            )}
+
+                        </strong>
+
+
+                        <span
+                            class="
+                                transaction-status
+                                ${statusClass}
+                            ">
+
+                            ${escapeHtml(
+                                transaction.status ||
+                                "-"
+                            )}
+
+                        </span>
+
+                    </div>
+
+
+                    <p>
+
+                        Order ID:
+
+                        ${escapeHtml(
+                            transaction.order_id ||
+                            "-"
+                        )}
+
+                    </p>
+
+
+                    <p>
+
+                        Rp${formatRupiah(
+
+                            transaction.amount ||
+                            0
+
+                        )}
+
+                    </p>
+
+
+                    <p>
+
+                        ${escapeHtml(
+                            transaction.created_at ||
+                            "-"
+                        )}
+
+                    </p>
+
+                `;
+
+
+                container.appendChild(
+                    item
+                );
+
             }
+        );
 
-            var oldPrice = parseCurrency(parts[2]);
-            var newPrice = parseCurrency(parts[3]);
 
-            if (!parts[0] || !parts[1] || oldPrice <= 0 || newPrice <= 0) {
-                return null;
-            }
+    }
 
-            var direction = "same";
+    catch(error){
 
-            if (newPrice > oldPrice) {
-                direction = "up";
-            } else if (newPrice < oldPrice) {
-                direction = "down";
-            }
+        container.innerHTML = `
 
-            return {
-                namaProduk: parts[0],
-                kodeProduk: parts[1],
-                hargaAwal: oldPrice,
-                hargaUpdate: newPrice,
-                status: direction
-            };
-        }
+            <div class="empty">
 
-        function splitPriceLine(line) {
-            var separators = ["|", ";", "\t", ","];
+                <h3>
+                    Gagal memuat transaksi
+                </h3>
 
-            for (var index = 0; index < separators.length; index += 1) {
-                if (line.indexOf(separators[index]) !== -1) {
-                    return line.split(separators[index]).map(cleanText).filter(Boolean);
+                <p>
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==================================================
+   SAVE PANEL
+================================================== */
+
+function savePanel(
+    panel
+){
+
+    const panels =
+        JSON.parse(
+
+            localStorage.getItem(
+                "jaypay_panels"
+            )
+
+            ||
+
+            "[]"
+
+        );
+
+
+    panels.unshift(
+        panel
+    );
+
+
+    localStorage.setItem(
+
+        "jaypay_panels",
+
+        JSON.stringify(
+            panels
+        )
+
+    );
+
+}
+
+
+/* ==================================================
+   LOAD MY PANELS
+================================================== */
+
+function loadMyPanels(){
+
+    const container =
+        document.getElementById(
+            "myPanels"
+        );
+
+
+    const panels =
+        JSON.parse(
+
+            localStorage.getItem(
+                "jaypay_panels"
+            )
+
+            ||
+
+            "[]"
+
+        );
+
+
+    if(
+        !panels.length
+    ){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    Belum ada panel
+                </h3>
+
+                <p>
+                    Panel yang berhasil
+                    dibuat akan muncul di sini.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        "";
+
+
+    panels.forEach(
+        panel => {
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "panel-card";
+
+
+            card.innerHTML = `
+
+                <div
+                    class="panel-head">
+
+                    <h2>
+
+                        ${escapeHtml(
+                            panel.panel_name
+                        )}
+
+                    </h2>
+
+
+                    <span
+                        class="status-active">
+
+                        ${escapeHtml(
+                            panel.status ||
+                            "active"
+                        )}
+
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="panel-info">
+
+
+                    <div
+                        class="info">
+
+                        <span>
+                            Produk
+                        </span>
+
+                        <strong>
+
+                            ${escapeHtml(
+                                panel.product ||
+                                panel.product_id
+                            )}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="info">
+
+                        <span>
+                            Username
+                        </span>
+
+                        <strong>
+
+                            ${escapeHtml(
+                                panel.username ||
+                                "-"
+                            )}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="info">
+
+                        <span>
+                            Order ID
+                        </span>
+
+                        <strong>
+
+                            ${escapeHtml(
+                                panel.order_id ||
+                                "-"
+                            )}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="info">
+
+                        <span>
+                            WhatsApp
+                        </span>
+
+                        <strong>
+
+                            ${escapeHtml(
+                                panel.whatsapp ||
+                                "-"
+                            )}
+
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                ${
+                    panel.panel_url
+
+                    ?
+
+                    `
+
+                    <a
+                        class="open-panel"
+                        href="${escapeAttribute(
+                            panel.panel_url
+                        )}"
+                        target="_blank"
+                        rel="noopener">
+
+                        Buka Panel
+
+                    </a>
+
+                    `
+
+                    :
+
+                    ""
+
                 }
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   SAVE TRANSACTION LOCAL
+================================================== */
+
+function saveTransaction(
+    transaction
+){
+
+    const transactions =
+        JSON.parse(
+
+            localStorage.getItem(
+                "jaypay_transactions"
+            )
+
+            ||
+
+            "[]"
+
+        );
+
+
+    transactions.unshift(
+        transaction
+    );
+
+
+    localStorage.setItem(
+
+        "jaypay_transactions",
+
+        JSON.stringify(
+            transactions
+        )
+
+    );
+
+}
+
+
+/* ==================================================
+   CLEAR FORM
+================================================== */
+
+function clearForm(){
+
+    document.getElementById(
+        "emailUser"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "panelName"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "whatsapp"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "serverType"
+    ).value =
+        "";
+
+}
+
+
+/* ==================================================
+   LOADING
+================================================== */
+
+function showLoading(
+    state
+){
+
+    const loading =
+        document.getElementById(
+            "loading"
+        );
+
+
+    if(state){
+
+        loading.classList.add(
+            "active"
+        );
+
+    }
+
+    else{
+
+        loading.classList.remove(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   FORMAT RUPIAH
+================================================== */
+
+function formatRupiah(
+    value
+){
+
+    return Number(
+        value || 0
+    ).toLocaleString(
+        "id-ID"
+    );
+
+}
+
+
+/* ==================================================
+   ESCAPE HTML
+================================================== */
+
+function escapeHtml(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* ==================================================
+   ESCAPE JS
+================================================== */
+
+function escapeJs(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /\\/g,
+        "\\\\"
+    )
+
+    .replace(
+        /'/g,
+        "\\'"
+    )
+
+    .replace(
+        /\n/g,
+        "\\n"
+    )
+
+    .replace(
+        /\r/g,
+        "\\r"
+    );
+
+}
+
+
+/* ==================================================
+   ESCAPE ATTRIBUTE
+================================================== */
+
+function escapeAttribute(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /"/g,
+        "%22"
+    )
+
+    .replace(
+        /'/g,
+        "%27"
+    );
+
+}
+
+
+/* ==================================================
+   CLOSE MODAL WHEN CLICK OUTSIDE
+================================================== */
+
+document
+    .getElementById(
+        "buyModal"
+    )
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target ===
+                this
+            ){
+
+                closeBuy();
+
             }
 
-            return line.split(/\s{2,}/).map(cleanText).filter(Boolean);
         }
+    );
 
-        function normalizePriceRows(value) {
-            var rows = value;
 
-            if (rows && !Array.isArray(rows) && typeof rows === "object") {
-                rows = Object.keys(rows).sort(function (a, b) {
-                    return toNumber(a) - toNumber(b);
-                }).map(function (key) {
-                    return rows[key];
-                });
-            }
+/* ==================================================
+   INITIAL LOAD
+================================================== */
 
-            if (!Array.isArray(rows)) {
-                return [];
-            }
+loadProducts();
 
-            return rows.map(function (row) {
-                var oldPrice = toNumber(row.hargaAwal || row.harga_awal || row.oldPrice);
-                var newPrice = toNumber(row.hargaUpdate || row.harga_update || row.newPrice);
-                var status = row.status || "same";
+loadBalance();
 
-                if (status === "naik") {
-                    status = "up";
-                } else if (status === "turun") {
-                    status = "down";
-                } else if (newPrice > oldPrice) {
-                    status = "up";
-                } else if (newPrice < oldPrice) {
-                    status = "down";
-                }
+loadTransactions();
 
-                return {
-                    namaProduk: cleanText(row.namaProduk || row.nama_produk || row.productName || row.nama),
-                    kodeProduk: cleanText(row.kodeProduk || row.kode_produk || row.productCode || row.kode),
-                    hargaAwal: oldPrice,
-                    hargaUpdate: newPrice,
-                    status: status
-                };
-            }).filter(function (row) {
-                return row.namaProduk && row.kodeProduk && row.hargaAwal > 0 && row.hargaUpdate > 0;
-            });
-        }
+loadMyPanels();
 
-        function renderPriceTable(rows) {
-            return [
-                '<div class="price-table-wrap">',
-                '    <table class="price-table">',
-                '        <thead>',
-                '            <tr>',
-                '                <th>Produk</th>',
-                '                <th>Kode</th>',
-                '                <th>Harga Awal</th>',
-                '                <th>Harga Update</th>',
-                '                <th>Status</th>',
-                '            </tr>',
-                '        </thead>',
-                '        <tbody>',
-                rows.map(function (row) {
-                    return [
-                        '            <tr>',
-                        '                <td>' + escapeHtml(row.namaProduk) + '</td>',
-                        '                <td>' + escapeHtml(row.kodeProduk) + '</td>',
-                        '                <td>' + escapeHtml(formatRupiah(row.hargaAwal)) + '</td>',
-                        '                <td>' + escapeHtml(formatRupiah(row.hargaUpdate)) + '</td>',
-                        '                <td>' + renderPriceStatus(row.status) + '</td>',
-                        '            </tr>'
-                    ].join("");
-                }).join(""),
-                '        </tbody>',
-                '    </table>',
-                '</div>'
-            ].join("");
-        }
+</script>
 
-        function renderPriceStatus(status) {
-            if (status === "up") {
-                return '<span class="price-status up"><i class="fa-solid fa-arrow-trend-up"></i>Naik</span>';
-            }
 
-            if (status === "down") {
-                return '<span class="price-status down"><i class="fa-solid fa-arrow-trend-down"></i>Turun</span>';
-            }
-
-            return '<span class="price-status same"><i class="fa-solid fa-minus"></i>Tetap</span>';
-        }
-
-        function buildPriceDescription(rows) {
-            var lines = ["Nama Produk | Kode Produk | Harga Awal | Harga Update | Status"];
-
-            rows.forEach(function (row) {
-                lines.push([
-                    row.namaProduk,
-                    row.kodeProduk,
-                    formatRupiah(row.hargaAwal),
-                    formatRupiah(row.hargaUpdate),
-                    getPriceStatusLabel(row.status)
-                ].join(" | "));
-            });
-
-            return lines.join("\n");
-        }
-
-        function getPriceStatusLabel(status) {
-            if (status === "up") {
-                return "Naik";
-            }
-
-            if (status === "down") {
-                return "Turun";
-            }
-
-            return "Tetap";
-        }
-
-        function parseCurrency(value) {
-            var digits = String(value || "").replace(/[^\d]/g, "");
-            return digits ? Number(digits) : 0;
-        }
-
-        function formatRupiah(value) {
-            return new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                maximumFractionDigits: 0
-            }).format(toNumber(value));
-        }
-
-        function renderTags(tags) {
-            if (!tags.length) {
-                return '<span class="tag">#informasi</span>';
-            }
-
-            return tags.map(function (tag) {
-                return '<span class="tag">#' + escapeHtml(String(tag).replace(/^#/, "")) + '</span>';
-            }).join("");
-        }
-
-        function normalizeTags(value) {
-            if (Array.isArray(value)) {
-                return value.map(cleanText).filter(Boolean);
-            }
-
-            if (value && typeof value === "object") {
-                return Object.keys(value).map(function (key) {
-                    return cleanText(value[key]);
-                }).filter(Boolean);
-            }
-
-            return parseTags(value || "");
-        }
-
-        function parseTags(value) {
-            return String(value || "")
-                .split(",")
-                .map(cleanText)
-                .map(function (tag) {
-                    return tag.replace(/^#/, "");
-                })
-                .filter(Boolean);
-        }
-
-        function pick(source, keys) {
-            for (var index = 0; index < keys.length; index += 1) {
-                var value = source[keys[index]];
-
-                if (value !== undefined && value !== null && value !== "") {
-                    return value;
-                }
-            }
-
-            return "";
-        }
-
-        function getCreatedAt(item) {
-            var rawValue = pick(item, ["createdAt", "created_at", "waktu", "tanggal"]);
-            var numberValue = toNumber(rawValue);
-
-            if (numberValue) {
-                return numberValue;
-            }
-
-            var parsedDate = Date.parse(rawValue);
-            return Number.isFinite(parsedDate) ? parsedDate : 0;
-        }
-
-        function timeAgo(timestamp) {
-            if (!timestamp) {
-                return "baru saja";
-            }
-
-            var diff = Math.max(0, Date.now() - timestamp);
-            var minute = 60 * 1000;
-            var hour = 60 * minute;
-            var day = 24 * hour;
-            var seconds = Math.floor(diff / 1000);
-
-            if (diff < minute) {
-                return Math.max(1, seconds) + " detik yang lalu";
-            }
-
-            if (diff < hour) {
-                var minutes = Math.floor(diff / minute);
-                var remainingSeconds = Math.floor((diff % minute) / 1000);
-
-                return minutes + " menit " + remainingSeconds + " detik yang lalu";
-            }
-
-            if (diff < day) {
-                var hours = Math.floor(diff / hour);
-                var remainingMinutes = Math.floor((diff % hour) / minute);
-
-                return hours + " jam " + remainingMinutes + " menit yang lalu";
-            }
-
-            var days = Math.floor(diff / day);
-            var remainingHours = Math.floor((diff % day) / hour);
-
-            return days + " hari " + remainingHours + " jam yang lalu";
-        }
-
-        function formatDate(timestamp) {
-            return new Intl.DateTimeFormat("id-ID", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit"
-            }).format(new Date(timestamp));
-        }
-
-        function limitText(value, maxLength) {
-            var text = cleanText(value);
-
-            if (text.length <= maxLength) {
-                return text;
-            }
-
-            return text.slice(0, maxLength - 3) + "...";
-        }
-
-        function formatCount(value) {
-            var number = toNumber(value);
-
-            if (number >= 1000000) {
-                return (number / 1000000).toFixed(number >= 10000000 ? 0 : 1).replace(".0", "") + "m";
-            }
-
-            if (number >= 1000) {
-                return (number / 1000).toFixed(number >= 10000 ? 0 : 1).replace(".0", "") + "k";
-            }
-
-            return String(number);
-        }
-
-        function toNumber(value) {
-            var number = Number(value);
-            return Number.isFinite(number) ? number : 0;
-        }
-
-        function cleanText(value) {
-            return String(value || "").trim();
-        }
-
-        function safeImageUrl(value) {
-            var url = cleanText(value);
-            return /^https?:\/\//i.test(url) ? url : "";
-        }
-
-        function escapeHtml(value) {
-            return String(value)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        function escapeAttribute(value) {
-            return escapeHtml(value).replace(/`/g, "&#096;");
-        }
-
-        function setMessage(text, isError) {
-            message.textContent = text || "";
-            message.className = isError ? "message error" : "message";
-        }
-    </script>
 </body>
-
 </html>
