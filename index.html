@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>JAYPAY Panel</title>
 
-
 <style>
-
-/* ========================================
-   RESET
-======================================== */
-
 *{
     margin:0;
     padding:0;
@@ -29,1249 +18,629 @@ html{
 }
 
 body{
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family:Arial,Helvetica,sans-serif;
     background:#f5f9ff;
-
     color:#172033;
-
-    min-height:100vh;
-
-    padding-bottom:100px;
-
+    padding-bottom:95px;
 }
 
-button,
-input,
-select{
-
+button,input,select{
     font-family:inherit;
-
 }
-
-
-/* ========================================
-   CONTAINER
-======================================== */
 
 .container{
-
     width:92%;
-
-    max-width:1100px;
-
+    max-width:1050px;
     margin:auto;
-
 }
 
-
-/* ========================================
+/* =========================
    HEADER
-======================================== */
+========================= */
 
 .header{
-
     background:#42A5F5;
-
-    color:white;
-
-    padding:20px 0;
-
-    border-radius:
-        0
-        0
-        24px
-        24px;
-
-    box-shadow:
-        0 8px 30px
-        rgba(
-            66,
-            165,
-            245,
-            .20
-        );
-
+    color:#fff;
+    padding:20px 0 24px;
+    border-radius:0 0 25px 25px;
+    box-shadow:0 8px 30px rgba(66,165,245,.18);
 }
-
 
 .header-top{
-
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
-
     gap:15px;
-
 }
-
 
 .logo{
-
     font-size:23px;
-
     font-weight:800;
-
     letter-spacing:.5px;
-
 }
 
-
-.balance-box{
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            .16
-        );
-
-    border:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .20
-        );
-
-    padding:
-        9px
-        13px;
-
-    border-radius:12px;
-
+.user-info{
+    margin-top:5px;
     font-size:12px;
-
+    opacity:.9;
 }
 
+.balance{
+    background:rgba(255,255,255,.17);
+    border:1px solid rgba(255,255,255,.15);
+    padding:10px 13px;
+    border-radius:12px;
+    font-size:12px;
+    text-align:right;
+}
 
-/* ========================================
+.balance small{
+    display:block;
+    opacity:.8;
+    margin-bottom:3px;
+}
+
+.balance strong{
+    font-size:14px;
+}
+
+/* =========================
    PAGE
-======================================== */
+========================= */
 
 .page{
-
     display:none;
-
     padding-top:28px;
-
-    animation:
-        pageIn
-        .20s
-        ease;
-
+    animation:fade .2s ease;
 }
-
 
 .page.active{
-
     display:block;
-
 }
 
-
-@keyframes pageIn{
-
+@keyframes fade{
     from{
-
         opacity:0;
-
-        transform:
-            translateY(5px);
-
+        transform:translateY(5px);
     }
-
     to{
-
         opacity:1;
-
-        transform:
-            translateY(0);
-
+        transform:translateY(0);
     }
-
 }
-
-
-/* ========================================
-   TITLE
-======================================== */
 
 .title{
-
     margin-bottom:20px;
-
 }
-
 
 .title h1{
-
     font-size:27px;
-
 }
-
 
 .title p{
-
     color:#7c8798;
-
     font-size:13px;
-
     margin-top:6px;
-
 }
 
+/* =========================
+   CATEGORY
+========================= */
 
-/* ========================================
-   CATEGORY SWITCH
-======================================== */
-
-.panel-type{
-
+.category-nav{
     display:flex;
-
-    gap:8px;
-
-    background:white;
-
+    gap:7px;
     padding:6px;
-
-    border:
-        1px solid
-        #e9eef4;
-
+    background:#fff;
+    border:1px solid #edf2f7;
     border-radius:15px;
-
-    margin-bottom:20px;
-
+    margin-bottom:18px;
 }
 
-
-.type-btn{
-
+.category-btn{
     flex:1;
-
     border:0;
-
     background:transparent;
-
-    color:#8791a0;
-
+    color:#7c8798;
     padding:12px;
-
     border-radius:10px;
-
-    font-size:13px;
-
-    font-weight:700;
-
     cursor:pointer;
-
-    transition:.2s;
-
+    font-size:12px;
+    font-weight:bold;
 }
 
-
-.type-btn:hover{
-
-    background:#f4f8fc;
-
-}
-
-
-.type-btn.active{
-
+.category-btn.active{
     background:#42A5F5;
-
-    color:white;
-
+    color:#fff;
 }
 
-
-/* ========================================
-   PANEL SECTION
-======================================== */
-
-.panel-section{
-
-    display:none;
-
-}
-
-
-.panel-section.active{
-
-    display:block;
-
-}
-
-
-/* ========================================
+/* =========================
    PRODUCTS
-======================================== */
+========================= */
+
+.category-content{
+    display:none;
+}
+
+.category-content.active{
+    display:block;
+}
 
 .products{
-
     display:grid;
-
-    grid-template-columns:
-        repeat(
-            3,
-            1fr
-        );
-
+    grid-template-columns:repeat(3,1fr);
     gap:18px;
-
 }
-
 
 .product{
-
-    background:white;
-
-    border:
-        1px solid
-        #e9eef4;
-
+    background:#fff;
+    border:1px solid #edf2f7;
     border-radius:20px;
-
-    padding:21px;
-
-    box-shadow:
-        0
-        8px
-        28px
-        rgba(
-            0,
-            0,
-            0,
-            .045
-        );
-
+    padding:22px;
+    box-shadow:0 8px 28px rgba(0,0,0,.05);
     transition:.2s ease;
-
 }
-
 
 .product:hover{
-
-    transform:
-        translateY(-3px);
-
-    box-shadow:
-        0
-        13px
-        32px
-        rgba(
-            0,
-            0,
-            0,
-            .08
-        );
-
+    transform:translateY(-3px);
+    box-shadow:0 12px 32px rgba(0,0,0,.08);
 }
-
 
 .product h3{
-
     font-size:18px;
-
 }
 
-
-.product-category{
-
+.badge{
     display:inline-block;
-
-    background:#edf7ff;
-
-    color:#1976D2;
-
-    padding:
-        5px
-        9px;
-
+    margin-top:8px;
+    padding:5px 9px;
     border-radius:20px;
-
+    background:#eaf6ff;
+    color:#1976D2;
     font-size:10px;
-
     font-weight:bold;
-
-    margin-top:9px;
-
 }
-
 
 .desc{
-
     color:#7c8798;
-
     font-size:12px;
-
     line-height:1.5;
-
-    margin-top:9px;
-
+    margin-top:8px;
 }
-
 
 .price{
-
     color:#42A5F5;
-
     font-size:25px;
-
     font-weight:800;
-
-    margin:
-        17px
-        0;
-
+    margin:17px 0;
 }
-
 
 .price small{
-
     color:#8993a3;
-
-    font-size:10px;
-
+    font-size:11px;
     font-weight:normal;
-
 }
-
 
 .features{
-
     list-style:none;
-
     margin-bottom:18px;
-
 }
-
 
 .features li{
-
-    color:#596476;
-
-    font-size:12px;
-
-    padding:
-        5px
-        0;
-
+    color:#566174;
+    font-size:13px;
+    margin:9px 0;
 }
 
-
-.features li::before{
-
+.features li:before{
     content:"✓";
-
     color:#42A5F5;
-
     font-weight:bold;
-
     margin-right:7px;
-
 }
-
-
-/* ========================================
-   BUTTON
-======================================== */
 
 .buy{
-
     width:100%;
-
     border:0;
-
     background:#42A5F5;
-
-    color:white;
-
+    color:#fff;
     padding:13px;
-
     border-radius:12px;
-
     font-size:13px;
-
     font-weight:bold;
-
     cursor:pointer;
-
     transition:.2s;
-
 }
-
 
 .buy:hover{
-
     background:#2196F3;
-
 }
-
 
 .buy:disabled{
-
     opacity:.6;
-
     cursor:not-allowed;
-
 }
 
-
-/* ========================================
-   EMPTY
-======================================== */
-
-.empty{
-
-    background:white;
-
-    border:
-        1px solid
-        #e9eef4;
-
-    padding:
-        45px
-        20px;
-
-    text-align:center;
-
-    border-radius:20px;
-
-    box-shadow:
-        0
-        7px
-        25px
-        rgba(
-            0,
-            0,
-            0,
-            .04
-        );
-
-}
-
-
-.empty h3{
-
-    font-size:17px;
-
-}
-
-
-.empty p{
-
-    color:#8993a3;
-
-    font-size:13px;
-
-    margin-top:7px;
-
-}
-
-
-/* ========================================
+/* =========================
    TRANSACTION
-======================================== */
+========================= */
 
 .transaction{
-
-    background:white;
-
-    border:
-        1px solid
-        #e9eef4;
-
+    background:#fff;
+    border:1px solid #edf2f7;
     padding:18px;
-
     border-radius:17px;
-
-    box-shadow:
-        0
-        7px
-        25px
-        rgba(
-            0,
-            0,
-            0,
-            .04
-        );
-
+    box-shadow:0 7px 25px rgba(0,0,0,.05);
     margin-bottom:12px;
-
 }
-
 
 .transaction-row{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     gap:10px;
-
 }
-
 
 .transaction strong{
-
     font-size:14px;
-
 }
-
 
 .transaction p{
-
     color:#7c8798;
-
     font-size:12px;
-
-    margin-top:7px;
-
+    margin-top:6px;
 }
 
-
-.transaction-status{
-
-    padding:
-        5px
-        9px;
-
-    border-radius:20px;
-
-    font-size:10px;
-
-    font-weight:bold;
-
-}
-
-
-.status-success{
-
+.success{
     color:#16803c;
-
-    background:#e8f7ee;
-
+    font-size:11px;
+    font-weight:bold;
 }
 
-
-.status-failed{
-
-    color:#b42318;
-
-    background:#fff0ee;
-
+.failed{
+    color:#c62828;
+    font-size:11px;
+    font-weight:bold;
 }
 
-
-/* ========================================
+/* =========================
    PANEL SAYA
-======================================== */
+========================= */
 
 .panel-card{
-
-    background:white;
-
-    border:
-        1px solid
-        #e9eef4;
-
+    background:#fff;
+    border:1px solid #edf2f7;
     border-radius:20px;
-
-    padding:21px;
-
+    padding:22px;
     margin-bottom:15px;
-
-    box-shadow:
-        0
-        8px
-        28px
-        rgba(
-            0,
-            0,
-            0,
-            .045
-        );
-
+    box-shadow:0 8px 28px rgba(0,0,0,.05);
 }
-
 
 .panel-head{
-
     display:flex;
-
-    align-items:center;
-
     justify-content:space-between;
-
+    align-items:center;
     gap:10px;
-
 }
-
 
 .panel-head h2{
-
     font-size:19px;
-
 }
-
-
-.status-active{
-
-    color:#16803c;
-
-    background:#e8f7ee;
-
-    padding:
-        5px
-        9px;
-
-    border-radius:20px;
-
-    font-size:10px;
-
-    font-weight:bold;
-
-}
-
 
 .panel-info{
-
     display:grid;
-
     gap:10px;
-
     margin-top:18px;
-
 }
-
 
 .info{
-
     background:#f6f9fc;
-
     padding:12px;
-
     border-radius:11px;
-
+    font-size:12px;
 }
-
 
 .info span{
-
     display:block;
-
     color:#8993a3;
-
-    font-size:11px;
-
     margin-bottom:4px;
-
 }
-
 
 .info strong{
-
     color:#263246;
-
-    font-size:12px;
-
     word-break:break-word;
-
 }
 
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    background:#e8f7ee;
+    color:#16803c;
+    font-size:10px;
+    font-weight:bold;
+}
 
 .open-panel{
-
     display:block;
-
     text-align:center;
-
     margin-top:17px;
-
     background:#42A5F5;
-
-    color:white;
-
+    color:#fff;
     padding:12px;
-
     border-radius:11px;
-
     font-size:13px;
-
     font-weight:bold;
-
     text-decoration:none;
-
 }
 
+/* =========================
+   EMPTY
+========================= */
 
-/* ========================================
+.empty{
+    background:#fff;
+    border:1px solid #edf2f7;
+    padding:45px 20px;
+    text-align:center;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.04);
+}
+
+.empty h3{
+    font-size:17px;
+}
+
+.empty p{
+    color:#8993a3;
+    font-size:13px;
+    margin-top:7px;
+}
+
+/* =========================
    MODAL
-======================================== */
+========================= */
 
 .modal{
-
     position:fixed;
-
     inset:0;
-
-    background:
-        rgba(
-            0,
-            0,
-            0,
-            .45
-        );
-
+    background:rgba(0,0,0,.45);
     display:none;
-
     align-items:flex-end;
-
     justify-content:center;
-
     z-index:999;
-
+    padding:0;
 }
-
 
 .modal.active{
-
     display:flex;
-
 }
-
 
 .modal-box{
-
     width:100%;
-
-    max-width:560px;
-
-    background:white;
-
-    border-radius:
-        25px
-        25px
-        0
-        0;
-
+    max-width:550px;
+    background:#fff;
+    border-radius:25px 25px 0 0;
     padding:25px;
-
-    animation:
-        slideUp
-        .25s
-        ease;
-
+    animation:slideUp .25s ease;
 }
-
 
 @keyframes slideUp{
-
     from{
-
-        transform:
-            translateY(
-                100%
-            );
-
+        transform:translateY(100%);
     }
-
     to{
-
-        transform:
-            translateY(
-                0
-            );
-
+        transform:translateY(0);
     }
-
 }
-
 
 .modal-head{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     margin-bottom:20px;
-
 }
-
 
 .modal-head h2{
-
     font-size:20px;
-
 }
-
 
 .close{
-
     width:35px;
-
     height:35px;
-
     border:0;
-
     border-radius:50%;
-
     background:#f1f5f9;
-
     cursor:pointer;
-
     font-size:19px;
-
 }
-
 
 .form-group{
-
     margin-bottom:15px;
-
 }
-
 
 .form-group label{
-
     display:block;
-
     font-size:12px;
-
     font-weight:bold;
-
     margin-bottom:7px;
-
 }
-
 
 .form-group input,
 .form-group select{
-
     width:100%;
-
     padding:13px;
-
-    border:
-        1px solid
-        #dce5ee;
-
+    border:1px solid #dce5ee;
     border-radius:11px;
-
     outline:none;
-
     font-size:13px;
-
 }
-
 
 .form-group input:focus,
 .form-group select:focus{
-
     border-color:#42A5F5;
-
 }
 
-
-.purchase-info{
-
-    background:#f5f9fd;
-
+.product-summary{
+    background:#f4f9fd;
     padding:13px;
-
     border-radius:12px;
-
-    margin-bottom:16px;
-
+    margin-bottom:15px;
     font-size:12px;
-
+    line-height:1.7;
 }
 
-
-.purchase-info strong{
-
-    color:#42A5F5;
-
+.product-summary strong{
+    color:#1976D2;
 }
 
-
-/* ========================================
-   NAVIGATION
-======================================== */
+/* =========================
+   BOTTOM NAVIGATION
+========================= */
 
 .bottom-nav{
-
     position:fixed;
-
     bottom:12px;
-
     left:50%;
-
-    transform:
-        translateX(
-            -50%
-        );
-
+    transform:translateX(-50%);
     width:92%;
-
     max-width:600px;
-
-    background:white;
-
-    border:
-        1px solid
-        #e9eef4;
-
+    background:#fff;
+    border:1px solid #edf2f7;
     border-radius:20px;
-
     padding:7px;
-
     display:grid;
-
-    grid-template-columns:
-        repeat(
-            3,
-            1fr
-        );
-
+    grid-template-columns:repeat(3,1fr);
     gap:5px;
-
-    box-shadow:
-        0
-        10px
-        35px
-        rgba(
-            0,
-            0,
-            0,
-            .13
-        );
-
+    box-shadow:0 10px 35px rgba(0,0,0,.13);
     z-index:100;
-
 }
-
 
 .nav-btn{
-
     border:0;
-
     background:transparent;
-
     color:#8993a3;
-
     padding:12px 5px;
-
     border-radius:14px;
-
     cursor:pointer;
-
     font-size:12px;
-
     font-weight:600;
-
+    transition:.2s;
 }
 
+.nav-btn:hover{
+    background:#f3f8fd;
+}
 
 .nav-btn.active{
-
     background:#e8f4ff;
-
     color:#1976D2;
-
 }
 
-
-/* ========================================
+/* =========================
    LOADING
-======================================== */
+========================= */
 
 .loading{
-
     position:fixed;
-
     inset:0;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            .75
-        );
-
+    background:rgba(255,255,255,.7);
     display:none;
-
     align-items:center;
-
     justify-content:center;
-
     z-index:2000;
-
 }
-
 
 .loading.active{
-
     display:flex;
-
 }
-
 
 .loading-box{
-
-    background:white;
-
-    padding:22px 28px;
-
-    border-radius:16px;
-
-    box-shadow:
-        0
-        10px
-        35px
-        rgba(
-            0,
-            0,
-            0,
-            .12
-        );
-
+    background:#fff;
+    padding:20px 25px;
+    border-radius:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
     font-size:13px;
-
 }
 
+/* =========================
+   TOAST
+========================= */
 
-/* ========================================
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:90px;
+    transform:translateX(-50%) translateY(20px);
+    background:#172033;
+    color:#fff;
+    padding:12px 17px;
+    border-radius:12px;
+    font-size:12px;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    z-index:3000;
+    max-width:90%;
+    text-align:center;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+/* =========================
    RESPONSIVE
-======================================== */
+========================= */
 
-@media(max-width:800px){
-
-    .products{
-
-        grid-template-columns:
-            repeat(
-                2,
-                1fr
-            );
-
-    }
-
-}
-
-
-@media(max-width:600px){
+@media(max-width:750px){
 
     .container{
-
         width:91%;
-
     }
-
 
     .products{
-
         grid-template-columns:1fr;
-
     }
 
+    .product{
+        padding:20px;
+    }
 
     .title h1{
-
         font-size:24px;
-
     }
-
 
     .header{
-
-        border-radius:
-            0
-            0
-            20px
-            20px;
-
+        border-radius:0 0 20px 20px;
     }
-
-
-    .modal{
-
-        align-items:flex-end;
-
-    }
-
 
     .modal-box{
-
         padding:22px;
-
     }
-
 }
 
-
-@media(min-width:601px){
+@media(min-width:751px){
 
     .modal{
-
         align-items:center;
-
         padding:20px;
-
     }
-
 
     .modal-box{
-
         border-radius:22px;
-
     }
-
 }
-
 </style>
-
 </head>
-
 
 <body>
 
 
-<!-- =====================================
-     LOADING
-===================================== -->
-
-<div
-    class="loading"
-    id="loading">
-
-    <div class="loading-box">
-        Memproses transaksi...
-    </div>
-
-</div>
-
-
-<!-- =====================================
+<!-- =========================
      HEADER
-===================================== -->
+========================= -->
 
 <header class="header">
 
@@ -1279,16 +648,31 @@ select{
 
         <div class="header-top">
 
-            <div class="logo">
-                JAYPAY
+            <div>
+
+                <div class="logo">
+                    JAYPAY
+                </div>
+
+                <div
+                    class="user-info"
+                    id="userInfo">
+
+                    User
+
+                </div>
+
             </div>
 
+            <div class="balance">
 
-            <div
-                class="balance-box"
-                id="balance">
+                <small>
+                    Saldo
+                </small>
 
-                Saldo API: Rp0
+                <strong id="balance">
+                    Rp0
+                </strong>
 
             </div>
 
@@ -1302,14 +686,13 @@ select{
 <main class="container">
 
 
-<!-- =====================================
+<!-- =========================
      LIST PANEL
-===================================== -->
+========================= -->
 
 <section
-    class="page active"
-    id="listPanel">
-
+    id="listPanel"
+    class="page active">
 
     <div class="title">
 
@@ -1318,22 +701,22 @@ select{
         </h1>
 
         <p>
-            Pilih panel umum atau private.
+            Pilih panel yang ingin kamu beli.
         </p>
 
     </div>
 
 
-    <div class="panel-type">
+    <!-- CATEGORY -->
+
+    <div class="category-nav">
 
         <button
-            class="type-btn active"
-            onclick="
-                showPanelType(
-                    'umum',
-                    this
-                )
-            ">
+            class="category-btn active"
+            onclick="changeCategory(
+                'umum',
+                this
+            )">
 
             Panel Umum
 
@@ -1341,13 +724,11 @@ select{
 
 
         <button
-            class="type-btn"
-            onclick="
-                showPanelType(
-                    'private',
-                    this
-                )
-            ">
+            class="category-btn"
+            onclick="changeCategory(
+                'private',
+                this
+            )">
 
             Panel Private
 
@@ -1359,8 +740,8 @@ select{
     <!-- PANEL UMUM -->
 
     <div
-        id="panelUmum"
-        class="panel-section active">
+        id="categoryUmum"
+        class="category-content active">
 
         <div
             id="productsUmum"
@@ -1373,7 +754,7 @@ select{
                 </h3>
 
                 <p>
-                    Mengambil produk panel umum...
+                    Mengambil data Panel Umum...
                 </p>
 
             </div>
@@ -1386,8 +767,8 @@ select{
     <!-- PANEL PRIVATE -->
 
     <div
-        id="panelPrivate"
-        class="panel-section">
+        id="categoryPrivate"
+        class="category-content">
 
         <div
             id="productsPrivate"
@@ -1400,7 +781,7 @@ select{
                 </h3>
 
                 <p>
-                    Mengambil produk panel private...
+                    Mengambil data Panel Private...
                 </p>
 
             </div>
@@ -1409,18 +790,16 @@ select{
 
     </div>
 
-
 </section>
 
 
-<!-- =====================================
+<!-- =========================
      TRANSACTION
-===================================== -->
+========================= -->
 
 <section
-    class="page"
-    id="transaction">
-
+    id="transaction"
+    class="page">
 
     <div class="title">
 
@@ -1451,18 +830,16 @@ select{
 
     </div>
 
-
 </section>
 
 
-<!-- =====================================
+<!-- =========================
      PANEL SAYA
-===================================== -->
+========================= -->
 
 <section
-    class="page"
-    id="panelSaya">
-
+    id="panelSaya"
+    class="page">
 
     <div class="title">
 
@@ -1471,7 +848,7 @@ select{
         </h1>
 
         <p>
-            Panel yang berhasil dibuat.
+            Panel yang sudah berhasil dibuat.
         </p>
 
     </div>
@@ -1482,40 +859,34 @@ select{
         <div class="empty">
 
             <h3>
-                Belum ada panel
+                Memuat panel
             </h3>
 
             <p>
-                Panel yang berhasil dibeli
-                akan muncul di sini.
+                Mengambil panel kamu...
             </p>
 
         </div>
 
     </div>
 
-
 </section>
-
 
 </main>
 
 
-<!-- =====================================
-     BOTTOM NAV
-===================================== -->
+<!-- =========================
+     NAVIGATION
+========================= -->
 
 <nav class="bottom-nav">
 
-
     <button
         class="nav-btn active"
-        onclick="
-            showPage(
-                'listPanel',
-                this
-            )
-        ">
+        onclick="showPage(
+            'listPanel',
+            this
+        )">
 
         List Panel
 
@@ -1524,12 +895,10 @@ select{
 
     <button
         class="nav-btn"
-        onclick="
-            showPage(
-                'transaction',
-                this
-            )
-        ">
+        onclick="showPage(
+            'transaction',
+            this
+        )">
 
         Transaction
 
@@ -1538,39 +907,33 @@ select{
 
     <button
         class="nav-btn"
-        onclick="
-            showPage(
-                'panelSaya',
-                this
-            )
-        ">
+        onclick="showPage(
+            'panelSaya',
+            this
+        )">
 
         Panel Saya
 
     </button>
 
-
 </nav>
 
 
-<!-- =====================================
+<!-- =========================
      BUY MODAL
-===================================== -->
+========================= -->
 
 <div
     class="modal"
     id="buyModal">
 
-
     <div class="modal-box">
-
 
         <div class="modal-head">
 
             <h2>
                 Beli Panel
             </h2>
-
 
             <button
                 class="close"
@@ -1583,35 +946,27 @@ select{
         </div>
 
 
-        <div class="purchase-info">
+        <div
+            class="product-summary">
 
             Produk:
-
-            <strong id="selectedProduct">
+            <strong id="selectedName">
                 -
             </strong>
 
-            <br><br>
+            <br>
 
             Harga:
-
             <strong id="selectedPrice">
                 Rp0
             </strong>
 
-        </div>
+            <br>
 
-
-        <div class="form-group">
-
-            <label>
-                Email Member BukaOlshop
-            </label>
-
-            <input
-                id="emailUser"
-                type="email"
-                placeholder="emailmember@gmail.com">
+            Saldo Perkasa:
+            <strong id="perkasaBalance">
+                Rp0
+            </strong>
 
         </div>
 
@@ -1625,6 +980,7 @@ select{
             <input
                 id="panelName"
                 type="text"
+                maxlength="40"
                 placeholder="Contoh: Jaypay Bot">
 
         </div>
@@ -1674,75 +1030,222 @@ select{
 
 
         <button
-            class="buy"
             id="buyButton"
-            onclick="processPurchase()">
+            class="buy"
+            onclick="buyPanel()">
 
             Beli Sekarang
 
         </button>
-
 
     </div>
 
 </div>
 
 
+<!-- =========================
+     LOADING
+========================= -->
+
+<div
+    class="loading"
+    id="loading">
+
+    <div class="loading-box">
+
+        Memproses...
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     TOAST
+========================= -->
+
+<div
+    class="toast"
+    id="toast">
+
+    -
+
+</div>
+
+
 <script>
 
-/* ==================================================
-   CONFIGURATION
-================================================== */
-
-
 /*
-    BUKAOLSHOP
+===========================================================
+JAYPAY PANEL
+===========================================================
 
-    Masukkan CLOSED API KEY kamu.
+PERKASA HOSTING API
+Base URL:
+https://perkasa-hosting.web.id/api/v1
+
+Authentication:
+X-Project: NAMA_PROJECT
+Authorization: Bearer PH_LIVE_xxxxx
+
+===========================================================
 */
 
-const BUKAOLSHOP = {
 
-    apiUrl:
-        "https://bukaolshop.net/api/v1/member/saldo",
-
-    apiKey:
-        "SG5mMldOWDNBNXFMYlNWRnFySlNsRUcxY3h5K1o2RHlaaURhRGJxYS91NkpVRk1maUZ1dU93dEFsU3MzVDlPU0NkWElad3V0VmFmaVV5Wk9mV3I2TVFlOUttS1B0dCtBeHFzY3c1U0Q0cFdENW95NVo3bHJmU2Z1dUdMT3NzYXBsRjZWT2pXTUowMzBldjV0ZGNWaGhIaHFDK20xMmRhOTVWY1JJVGowNnVNK3R0dkNnVHNLYVB2ZDIyV1hHKzFR"
-
-};
-
-
-/*
-    PERKASA HOSTING
-
-    Project dan API Key harus berasal
-    dari Project yang sama.
-*/
+/* =========================================================
+   CONFIG PERKASA
+========================================================= */
 
 const PERKASA = {
 
     baseUrl:
         "https://perkasa-hosting.web.id/api/v1",
 
+    /*
+     * Masukkan Project dari Profil
+     * API Reseller Perkasa.
+     */
     project:
-        "HAWIYA",
+        "PROJECT_KAMU",
 
+    /*
+     * Masukkan API Key Perkasa.
+     *
+     * PERINGATAN:
+     * API key di HTML dapat dilihat user.
+     * Gunakan backend untuk production.
+     */
     apiKey:
-        "PH_LIVE_40AACD8C95CBDB6E3E2325D83B76DC7C"
+        "PH_LIVE_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 };
 
 
-/* ==================================================
+/* =========================================================
+   CONFIG BUKAOLSHOP
+========================================================= */
+
+const BUKAOLSHOP = {
+
+    /*
+     * API Key Closed BukaOlshop
+     */
+    apiKey:
+        "CLOSED_API_KEY_ANDA",
+
+    /*
+     * Endpoint yang kamu berikan.
+     */
+    saldoEndpoint:
+        "https://bukaolshop.net/api/v1/member/saldo"
+
+};
+
+
+/* =========================================================
+   DATA USER
+=========================================================
+
+   Kalau website JAYPAY kamu sudah mempunyai login,
+   ganti CURRENT_USER dengan data user yang sedang login.
+
+========================================================= */
+
+const CURRENT_USER = {
+
+    name:
+        "Nama User",
+
+    email:
+        "user@gmail.com"
+
+};
+
+
+/* =========================================================
    GLOBAL
-================================================== */
+========================================================= */
 
 let selectedProduct = null;
 
 
-/* ==================================================
-   PAGE NAVIGATION
-================================================== */
+/* =========================================================
+   PERKASA REQUEST
+========================================================= */
+
+async function perkasaRequest(
+    endpoint,
+    options = {}
+){
+
+    const response =
+        await fetch(
+            PERKASA.baseUrl +
+            endpoint,
+            {
+
+                method:
+                    options.method ||
+                    "GET",
+
+                headers:{
+
+                    "X-Project":
+                        PERKASA.project,
+
+                    "Authorization":
+                        "Bearer " +
+                        PERKASA.apiKey,
+
+                    "Content-Type":
+                        "application/json",
+
+                    ...(options.headers || {})
+
+                },
+
+                body:
+                    options.body
+
+            }
+        );
+
+
+    let result;
+
+    try{
+
+        result =
+            await response.json();
+
+    }catch{
+
+        throw new Error(
+            "Response API Perkasa tidak valid."
+        );
+
+    }
+
+
+    if(!response.ok){
+
+        throw new Error(
+            result.message ||
+            "Request API Perkasa gagal. HTTP " +
+            response.status
+        );
+
+    }
+
+
+    return result;
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 function showPage(
     pageId,
@@ -1826,17 +1329,17 @@ function showPage(
 }
 
 
-/* ==================================================
-   PANEL CATEGORY
-================================================== */
+/* =========================================================
+   CATEGORY
+========================================================= */
 
-function showPanelType(
-    type,
+function changeCategory(
+    category,
     button
 ){
 
     document
-        .querySelectorAll(".type-btn")
+        .querySelectorAll(".category-btn")
         .forEach(
             btn => {
 
@@ -1854,11 +1357,11 @@ function showPanelType(
 
 
     document
-        .querySelectorAll(".panel-section")
+        .querySelectorAll(".category-content")
         .forEach(
-            section => {
+            content => {
 
-                section.classList.remove(
+                content.classList.remove(
                     "active"
                 );
 
@@ -1866,116 +1369,57 @@ function showPanelType(
         );
 
 
-    if(type === "umum"){
+    if(
+        category ===
+        "umum"
+    ){
 
         document
             .getElementById(
-                "panelUmum"
+                "categoryUmum"
             )
             .classList.add(
                 "active"
             );
-
-    }
-
-
-    if(type === "private"){
-
-        document
-            .getElementById(
-                "panelPrivate"
-            )
-            .classList.add(
-                "active"
-            );
-
-    }
-
-}
-
-
-/* ==================================================
-   PERKASA REQUEST
-================================================== */
-
-async function perkasaRequest(
-    endpoint,
-    options = {}
-){
-
-    const response =
-        await fetch(
-
-            PERKASA.baseUrl +
-            endpoint,
-
-            {
-
-                ...options,
-
-                headers:{
-
-                    "X-Project":
-                        PERKASA.project,
-
-                    "Authorization":
-                        "Bearer " +
-                        PERKASA.apiKey,
-
-                    "Content-Type":
-                        "application/json",
-
-                    ...(options.headers || {})
-
-                }
-
-            }
-
-        );
-
-
-    let data;
-
-
-    try{
-
-        data =
-            await response.json();
-
-    }
-
-    catch{
-
-        throw new Error(
-            "Response Perkasa tidak valid."
-        );
 
     }
 
 
     if(
-        !response.ok
+        category ===
+        "private"
     ){
 
-        throw new Error(
-
-            data.message ||
-            "Request Perkasa gagal. HTTP " +
-            response.status
-
-        );
+        document
+            .getElementById(
+                "categoryPrivate"
+            )
+            .classList.add(
+                "active"
+            );
 
     }
-
-
-    return data;
 
 }
 
 
-/* ==================================================
+/* =========================================================
+   USER
+========================================================= */
+
+function loadUser(){
+
+    document.getElementById(
+        "userInfo"
+    ).textContent =
+        CURRENT_USER.name;
+
+}
+
+
+/* =========================================================
    LOAD PRODUCTS
-================================================== */
+========================================================= */
 
 async function loadProducts(){
 
@@ -2023,47 +1467,128 @@ async function loadProducts(){
 
 
         /*
-            HANYA:
-            umum
-            private
+         * HANYA active.
+         *
+         * ADMIN dan OWNER sengaja
+         * tidak ditampilkan.
+         */
 
-            Admin dan Owner
-            otomatis dibuang.
-        */
+        const visibleProducts =
+            products.filter(
+                product => {
+
+                    const category =
+                        String(
+                            product.category ||
+                            ""
+                        ).toLowerCase();
+
+
+                    const productId =
+                        String(
+                            product.product_id ||
+                            ""
+                        ).toUpperCase();
+
+
+                    const name =
+                        String(
+                            product.name ||
+                            ""
+                        ).toLowerCase();
+
+
+                    if(
+                        product.status !==
+                        "active"
+                    ){
+
+                        return false;
+
+                    }
+
+
+                    /*
+                     * Admin:
+                     * PU_ADMIN
+                     */
+                    if(
+                        productId ===
+                        "PU_ADMIN"
+                    ){
+
+                        return false;
+
+                    }
+
+
+                    /*
+                     * Owner:
+                     * PP_OWNER
+                     */
+                    if(
+                        productId ===
+                        "PP_OWNER"
+                    ){
+
+                        return false;
+
+                    }
+
+
+                    if(
+                        name.includes(
+                            "admin panel"
+                        )
+                    ){
+
+                        return false;
+
+                    }
+
+
+                    if(
+                        name.includes(
+                            "owner panel"
+                        )
+                    ){
+
+                        return false;
+
+                    }
+
+
+                    return (
+                        category ===
+                        "umum"
+                        ||
+                        category ===
+                        "private"
+                    );
+
+                }
+            );
+
 
         const umumProducts =
-            products.filter(
+            visibleProducts.filter(
                 product =>
-
-                    product.status ===
-                    "active"
-
-                    &&
-
                     String(
                         product.category
                     ).toLowerCase()
                     ===
                     "umum"
-
             );
 
 
         const privateProducts =
-            products.filter(
+            visibleProducts.filter(
                 product =>
-
-                    product.status ===
-                    "active"
-
-                    &&
-
                     String(
                         product.category
                     ).toLowerCase()
                     ===
                     "private"
-
             );
 
 
@@ -2079,17 +1604,15 @@ async function loadProducts(){
         );
 
 
-    }
+    }catch(error){
 
-    catch(error){
-
-        showProductError(
+        showProductsError(
             umum,
             error.message
         );
 
 
-        showProductError(
+        showProductsError(
             privateBox,
             error.message
         );
@@ -2099,9 +1622,9 @@ async function loadProducts(){
 }
 
 
-/* ==================================================
+/* =========================================================
    RENDER PRODUCTS
-================================================== */
+========================================================= */
 
 function renderProducts(
     container,
@@ -2121,7 +1644,7 @@ function renderProducts(
                 </h3>
 
                 <p>
-                    Belum ada produk aktif.
+                    Belum ada panel pada kategori ini.
                 </p>
 
             </div>
@@ -2139,59 +1662,6 @@ function renderProducts(
     products.forEach(
         product => {
 
-
-            /*
-                SECURITY FILTER TAMBAHAN
-
-                Kalau suatu saat API mengirim
-                Admin / Owner ke frontend,
-                tetap tidak ditampilkan.
-            */
-
-            const productId =
-                String(
-                    product.product_id ||
-                    ""
-                ).toUpperCase();
-
-
-            if(
-                productId.includes(
-                    "ADMIN"
-                )
-
-                ||
-
-                productId.includes(
-                    "OWNER"
-                )
-
-                ||
-
-                String(
-                    product.name ||
-                    ""
-                ).toLowerCase()
-                .includes(
-                    "admin"
-                )
-
-                ||
-
-                String(
-                    product.name ||
-                    ""
-                ).toLowerCase()
-                .includes(
-                    "owner"
-                )
-            ){
-
-                return;
-
-            }
-
-
             const card =
                 document.createElement(
                     "div"
@@ -2202,31 +1672,38 @@ function renderProducts(
                 "product";
 
 
+            const name =
+                product.name ||
+                "Panel";
+
+
+            const price =
+                Number(
+                    product.price ||
+                    0
+                );
+
+
+            const category =
+                product.category ||
+                "panel";
+
+
             card.innerHTML = `
 
                 <h3>
-
-                    ${escapeHtml(
-                        product.name ||
-                        "Panel"
-                    )}
-
+                    ${escapeHtml(name)}
                 </h3>
 
-
-                <span
-                    class="product-category">
+                <span class="badge">
 
                     ${escapeHtml(
-                        product.category
+                        category
                     )}
 
                 </span>
 
-
                 <div class="desc">
-
-                    Periode:
 
                     ${escapeHtml(
                         product.billing_period ||
@@ -2235,19 +1712,15 @@ function renderProducts(
 
                 </div>
 
-
                 <div class="price">
 
-                    Rp${formatRupiah(
-                        product.price
-                    )}
+                    Rp${formatRupiah(price)}
 
                     <small>
-                        / bulan
+                        / bln
                     </small>
 
                 </div>
-
 
                 <ul class="features">
 
@@ -2259,7 +1732,6 @@ function renderProducts(
                         )}
                     </li>
 
-
                     <li>
                         CPU:
                         ${escapeHtml(
@@ -2267,7 +1739,6 @@ function renderProducts(
                             "-"
                         )}
                     </li>
-
 
                     <li>
                         Disk:
@@ -2277,38 +1748,32 @@ function renderProducts(
                         )}
                     </li>
 
-
-                    <li>
-                        Product ID:
-                        ${escapeHtml(
-                            product.product_id ||
-                            "-"
-                        )}
-                    </li>
-
                 </ul>
 
-
                 <button
-                    class="buy"
-                    onclick="openBuy(
-                        '${escapeJs(
-                            product.product_id
-                        )}',
-                        '${escapeJs(
-                            product.name
-                        )}',
-                        ${Number(
-                            product.price ||
-                            0
-                        )}
-                    )">
+                    class="buy">
 
                     Beli Sekarang
 
                 </button>
 
             `;
+
+
+            card
+                .querySelector(
+                    ".buy"
+                )
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        selectProduct(
+                            product
+                        );
+
+                    }
+                );
 
 
             container.appendChild(
@@ -2321,64 +1786,22 @@ function renderProducts(
 }
 
 
-/* ==================================================
-   PRODUCT ERROR
-================================================== */
+/* =========================================================
+   SELECT PRODUCT
+========================================================= */
 
-function showProductError(
-    container,
-    message
+function selectProduct(
+    product
 ){
 
-    container.innerHTML = `
-
-        <div class="empty">
-
-            <h3>
-                Gagal memuat produk
-            </h3>
-
-            <p>
-                ${escapeHtml(
-                    message
-                )}
-            </p>
-
-        </div>
-
-    `;
-
-}
-
-
-/* ==================================================
-   OPEN BUY
-================================================== */
-
-function openBuy(
-    productId,
-    productName,
-    price
-){
-
-    selectedProduct = {
-
-        id:
-            productId,
-
-        name:
-            productName,
-
-        price:
-            Number(price)
-
-    };
+    selectedProduct =
+        product;
 
 
     document.getElementById(
-        "selectedProduct"
+        "selectedName"
     ).textContent =
-        productName;
+        product.name;
 
 
     document.getElementById(
@@ -2386,7 +1809,7 @@ function openBuy(
     ).textContent =
         "Rp" +
         formatRupiah(
-            price
+            product.price
         );
 
 
@@ -2396,12 +1819,15 @@ function openBuy(
         "active"
     );
 
+
+    loadBalanceForModal();
+
 }
 
 
-/* ==================================================
+/* =========================================================
    CLOSE BUY
-================================================== */
+========================================================= */
 
 function closeBuy(){
 
@@ -2414,209 +1840,114 @@ function closeBuy(){
 }
 
 
-/* ==================================================
-   CEK SALDO BUKAOLSHOP
-================================================== */
+/* =========================================================
+   BALANCE PERKASA
+========================================================= */
 
-async function cekSaldoBukaOlshop(
-    emailUser
-){
-
-    /*
-        Endpoint saldo yang kamu berikan.
-
-        Jika dokumentasi BukaOlshop yang kamu
-        gunakan memiliki endpoint GET saldo
-        terpisah, sesuaikan fungsi ini.
-    */
-
-    const response =
-        await fetch(
-
-            BUKAOLSHOP.apiUrl,
-
-            {
-
-                method:"POST",
-
-                headers:{
-
-                    "Authorization":
-                        "Bearer " +
-                        BUKAOLSHOP.apiKey,
-
-                    "Content-Type":
-                        "application/json"
-
-                },
-
-                body:
-                    JSON.stringify({
-
-                        email_user:
-                            emailUser,
-
-                        tipe:
-                            "cek"
-
-                    })
-
-            }
-
-        );
-
-
-    let data;
-
+async function loadBalance(){
 
     try{
 
-        data =
-            await response.json();
-
-    }
-
-    catch{
-
-        throw new Error(
-            "Response BukaOlshop tidak valid."
-        );
-
-    }
+        const result =
+            await perkasaRequest(
+                "/balance"
+            );
 
 
-    if(
-        !response.ok
-    ){
+        if(
+            result.status !==
+            "success"
+        ){
 
-        throw new Error(
+            return;
 
-            data.message ||
-            "Gagal mengecek saldo BukaOlshop."
-
-        );
-
-    }
+        }
 
 
-    return data;
-
-}
-
-
-/* ==================================================
-   POTONG SALDO BUKAOLSHOP
-================================================== */
-
-async function potongSaldoBukaOlshop(
-    emailUser,
-    jumlah
-){
-
-    const response =
-        await fetch(
-
-            BUKAOLSHOP.apiUrl,
-
-            {
-
-                method:"POST",
-
-                headers:{
-
-                    "Authorization":
-                        "Bearer " +
-                        BUKAOLSHOP.apiKey,
-
-                    "Content-Type":
-                        "application/json"
-
-                },
-
-                body:
-                    JSON.stringify({
-
-                        email_user:
-                            emailUser,
-
-                        tipe:
-                            "kurang",
-
-                        jumlah:
-                            Number(jumlah),
-
-                        notifikasi:
-                            true
-
-                    })
-
-            }
-
-        );
+        const balance =
+            Number(
+                result.data?.balance ||
+                0
+            );
 
 
-    let data;
-
-
-    try{
-
-        data =
-            await response.json();
-
-    }
-
-    catch{
-
-        throw new Error(
-            "Response potong saldo BukaOlshop tidak valid."
-        );
-
-    }
-
-
-    if(
-        !response.ok
-    ){
-
-        throw new Error(
-
-            data.message ||
-            "Saldo BukaOlshop gagal dipotong."
-
-        );
-
-    }
-
-
-    return data;
-
-}
-
-
-/* ==================================================
-   PROSES PEMBELIAN
-================================================== */
-
-async function processPurchase(){
-
-    if(
-        !selectedProduct
-    ){
-
-        alert(
-            "Produk belum dipilih."
-        );
-
-        return;
-
-    }
-
-
-    const emailUser =
         document.getElementById(
-            "emailUser"
-        ).value.trim();
+            "balance"
+        ).textContent =
+            "Rp" +
+            formatRupiah(
+                balance
+            );
 
+
+        return balance;
+
+
+    }catch(error){
+
+        console.error(
+            "Balance:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   BALANCE MODAL
+========================================================= */
+
+async function loadBalanceForModal(){
+
+    const balanceElement =
+        document.getElementById(
+            "perkasaBalance"
+        );
+
+
+    balanceElement.textContent =
+        "Memuat...";
+
+
+    try{
+
+        const result =
+            await perkasaRequest(
+                "/balance"
+            );
+
+
+        if(
+            result.status ===
+            "success"
+        ){
+
+            balanceElement.textContent =
+                "Rp" +
+                formatRupiah(
+                    result.data.balance
+                );
+
+        }
+
+
+    }catch{
+
+        balanceElement.textContent =
+            "Tidak tersedia";
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE PANEL
+========================================================= */
+
+async function createPanel(){
 
     const panelName =
         document.getElementById(
@@ -2636,61 +1967,94 @@ async function processPurchase(){
         ).value;
 
 
-    if(!emailUser){
+    if(
+        !selectedProduct
+    ){
 
-        alert(
-            "Email BukaOlshop wajib diisi."
+        throw new Error(
+            "Produk belum dipilih."
         );
-
-        return;
 
     }
-
-
-    if(!panelName){
-
-        alert(
-            "Nama panel wajib diisi."
-        );
-
-        return;
-
-    }
-
-
-    if(!whatsapp){
-
-        alert(
-            "Nomor WhatsApp wajib diisi."
-        );
-
-        return;
-
-    }
-
-
-    const harga =
-        Number(
-            selectedProduct.price
-        );
 
 
     if(
-        !Number.isFinite(
-            harga
-        )
-        ||
-        harga <= 0
+        !panelName
     ){
 
-        alert(
-            "Harga produk tidak valid."
+        throw new Error(
+            "Nama panel wajib diisi."
         );
-
-        return;
 
     }
 
+
+    if(
+        !whatsapp
+    ){
+
+        throw new Error(
+            "Nomor WhatsApp wajib diisi."
+        );
+
+    }
+
+
+    /*
+     * Sesuai dokumentasi Perkasa:
+     *
+     * product_id
+     * panel_name
+     * whatsapp
+     * server_type optional
+     */
+
+    const payload = {
+
+        product_id:
+            selectedProduct.product_id,
+
+        panel_name:
+            panelName,
+
+        whatsapp:
+            whatsapp
+
+    };
+
+
+    if(
+        serverType
+    ){
+
+        payload.server_type =
+            serverType;
+
+    }
+
+
+    return await perkasaRequest(
+        "/panel/create",
+        {
+
+            method:"POST",
+
+            body:
+                JSON.stringify(
+                    payload
+                )
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUY PANEL
+========================================================= */
+
+async function buyPanel(){
 
     const button =
         document.getElementById(
@@ -2714,185 +2078,108 @@ async function processPurchase(){
     try{
 
         /*
-            STEP 1
+         * Perkasa otomatis:
+         *
+         * - validasi API key
+         * - cek saldo
+         * - cek product
+         * - ambil harga resmi
+         * - potong saldo API
+         * - create panel
+         *
+         * Jadi harga tidak dikirim
+         * dari frontend.
+         */
 
-            Potong saldo BukaOlshop.
-        */
-
-        const saldoResult =
-            await potongSaldoBukaOlshop(
-
-                emailUser,
-
-                harga
-
-            );
-
-
-        /*
-            STEP 2
-
-            Jika BukaOlshop sukses,
-            create panel Perkasa.
-        */
-
-        const payload = {
-
-            product_id:
-                selectedProduct.id,
-
-            panel_name:
-                panelName,
-
-            whatsapp:
-                whatsapp
-
-        };
-
-
-        if(serverType){
-
-            payload.server_type =
-                serverType;
-
-        }
-
-
-        const panelResult =
-            await perkasaRequest(
-
-                "/panel/create",
-
-                {
-
-                    method:"POST",
-
-                    body:
-                        JSON.stringify(
-                            payload
-                        )
-
-                }
-
-            );
+        const result =
+            await createPanel();
 
 
         if(
-            panelResult.status !==
+            result.status !==
             "success"
         ){
 
             throw new Error(
-
-                panelResult.message ||
+                result.message ||
                 "Panel gagal dibuat."
-
             );
 
         }
 
 
         const data =
-            panelResult.data ||
+            result.data ||
             {};
 
 
         /*
-            SIMPAN TRANSACTION
-        */
+         * Simpan data panel lokal.
+         */
 
-        saveTransaction({
+        savePanel({
 
             order_id:
-                data.order_id ||
-                "-",
+                data.order_id,
 
             product_id:
-                selectedProduct.id,
+                data.product_id,
 
-            product:
+            product_name:
                 selectedProduct.name,
 
-            category:
-                selectedProduct.category ||
-                "",
+            panel_name:
+                data.panel_name,
+
+            username:
+                data.username,
+
+            whatsapp:
+                document.getElementById(
+                    "whatsapp"
+                ).value.trim(),
+
+            panel_url:
+                data.panel_url,
+
+            price:
+                data.price_charged,
+
+            status:
+                data.status,
+
+            created_at:
+                data.created_at
+
+        });
+
+
+        /*
+         * Simpan transaksi lokal
+         * sebagai backup tampilan.
+         */
+
+        saveLocalTransaction({
+
+            order_id:
+                data.order_id,
+
+            product_id:
+                data.product_id,
+
+            product_name:
+                selectedProduct.name,
 
             amount:
-                data.price_charged ||
-                harga,
-
-            email:
-                emailUser,
+                data.price_charged,
 
             status:
                 "success",
 
             created_at:
-                data.created_at ||
-                new Date()
-                .toISOString()
+                data.created_at
 
         });
-
-
-        /*
-            SIMPAN PANEL
-        */
-
-        savePanel({
-
-            order_id:
-                data.order_id ||
-                "-",
-
-            product_id:
-                data.product_id ||
-                selectedProduct.id,
-
-            product:
-                selectedProduct.name,
-
-            panel_name:
-                data.panel_name ||
-                panelName,
-
-            username:
-                data.username ||
-                "-",
-
-            whatsapp:
-                whatsapp,
-
-            panel_url:
-                data.panel_url ||
-                "",
-
-            status:
-                data.status ||
-                "active",
-
-            created_at:
-                data.created_at ||
-                new Date()
-                .toISOString()
-
-        });
-
-
-        /*
-            UPDATE SALDO API
-        */
-
-        await loadBalance();
-
-
-        /*
-            UPDATE DATA
-        */
-
-        loadTransactions();
-
-        loadMyPanels();
 
 
         closeBuy();
@@ -2901,55 +2188,49 @@ async function processPurchase(){
         clearForm();
 
 
-        /*
-            BUKA PANEL SAYA
-        */
+        await loadBalance();
 
-        const panelButton =
+
+        loadMyPanels();
+
+
+        loadTransactions();
+
+
+        /*
+         * Buka Panel Saya.
+         */
+
+        const nav =
             document.querySelectorAll(
                 ".nav-btn"
             )[2];
 
 
         showPage(
-
             "panelSaya",
-
-            panelButton
-
+            nav
         );
 
 
-        alert(
+        showToast(
             "Panel berhasil dibuat."
         );
 
 
-    }
+    }catch(error){
 
-    catch(error){
-
-        /*
-            Jika create panel gagal
-            setelah saldo BukaOlshop
-            sudah terpotong, jangan pura-pura
-            menganggap transaksi berhasil.
-
-            Refund harus dilakukan melalui
-            mekanisme refund/topup BukaOlshop
-            yang memang tersedia pada akun/API kamu.
-        */
-
-        alert(
-
-            "Transaksi gagal:\n\n" +
-            error.message
-
+        console.error(
+            error
         );
 
-    }
 
-    finally{
+        showToast(
+            error.message ||
+            "Transaksi gagal."
+        );
+
+    }finally{
 
         button.disabled =
             false;
@@ -2968,70 +2249,27 @@ async function processPurchase(){
 }
 
 
-/* ==================================================
-   LOAD BALANCE PERKASA
-================================================== */
+/* =========================================================
+   ORDER STATUS
+========================================================= */
 
-async function loadBalance(){
+async function getOrderStatus(
+    orderId
+){
 
-    try{
-
-        const result =
-            await perkasaRequest(
-                "/balance"
-            );
-
-
-        if(
-            result.status !==
-            "success"
-        ){
-
-            return;
-
-        }
-
-
-        const balance =
-            result.data &&
-            result.data.balance
-            ?
-            result.data.balance
-            :
-            0;
-
-
-        document.getElementById(
-            "balance"
-        ).textContent =
-
-            "Saldo API: Rp" +
-            formatRupiah(
-                balance
-            );
-
-    }
-
-    catch(error){
-
-        document.getElementById(
-            "balance"
-        ).textContent =
-            "Saldo API: -";
-
-        console.log(
-            "Balance error:",
-            error.message
-        );
-
-    }
+    return await perkasaRequest(
+        "/panel/status/" +
+        encodeURIComponent(
+            orderId
+        )
+    );
 
 }
 
 
-/* ==================================================
-   LOAD TRANSACTIONS
-================================================== */
+/* =========================================================
+   TRANSACTIONS
+========================================================= */
 
 async function loadTransactions(){
 
@@ -3039,6 +2277,23 @@ async function loadTransactions(){
         document.getElementById(
             "transactionList"
         );
+
+
+    container.innerHTML = `
+
+        <div class="empty">
+
+            <h3>
+                Memuat transaksi
+            </h3>
+
+            <p>
+                Mengambil data dari Perkasa...
+            </p>
+
+        </div>
+
+    `;
 
 
     try{
@@ -3056,7 +2311,7 @@ async function loadTransactions(){
 
             throw new Error(
                 result.message ||
-                "Gagal mengambil transaksi."
+                "Transaksi gagal dimuat."
             );
 
         }
@@ -3085,8 +2340,7 @@ async function loadTransactions(){
                     </h3>
 
                     <p>
-                        Riwayat transaksi
-                        akan muncul di sini.
+                        Belum ada transaksi API.
                     </p>
 
                 </div>
@@ -3098,13 +2352,11 @@ async function loadTransactions(){
         }
 
 
-        container.innerHTML =
-            "";
+        container.innerHTML = "";
 
 
         transactions.forEach(
             transaction => {
-
 
                 const item =
                     document.createElement(
@@ -3126,12 +2378,10 @@ async function loadTransactions(){
                 const statusClass =
                     status ===
                     "success"
-
                     ?
-                    "status-success"
-
+                    "success"
                     :
-                    "status-failed";
+                    "failed";
 
 
                 item.innerHTML = `
@@ -3142,20 +2392,14 @@ async function loadTransactions(){
                         <strong>
 
                             ${escapeHtml(
-
                                 transaction.product_id ||
                                 "Panel"
-
                             )}
 
                         </strong>
 
-
                         <span
-                            class="
-                                transaction-status
-                                ${statusClass}
-                            ">
+                            class="${statusClass}">
 
                             ${escapeHtml(
                                 transaction.status ||
@@ -3170,7 +2414,6 @@ async function loadTransactions(){
                     <p>
 
                         Order ID:
-
                         ${escapeHtml(
                             transaction.order_id ||
                             "-"
@@ -3181,11 +2424,10 @@ async function loadTransactions(){
 
                     <p>
 
+                        Nominal:
                         Rp${formatRupiah(
-
                             transaction.amount ||
                             0
-
                         )}
 
                     </p>
@@ -3211,16 +2453,14 @@ async function loadTransactions(){
         );
 
 
-    }
-
-    catch(error){
+    }catch(error){
 
         container.innerHTML = `
 
             <div class="empty">
 
                 <h3>
-                    Gagal memuat transaksi
+                    Gagal mengambil transaksi
                 </h3>
 
                 <p>
@@ -3238,9 +2478,9 @@ async function loadTransactions(){
 }
 
 
-/* ==================================================
-   SAVE PANEL
-================================================== */
+/* =========================================================
+   LOCAL PANEL STORAGE
+========================================================= */
 
 function savePanel(
     panel
@@ -3248,39 +2488,49 @@ function savePanel(
 
     const panels =
         JSON.parse(
-
             localStorage.getItem(
                 "jaypay_panels"
-            )
-
-            ||
-
+            ) ||
             "[]"
-
         );
 
 
-    panels.unshift(
-        panel
-    );
+    /*
+     * Hindari duplikat order.
+     */
+
+    const exists =
+        panels.some(
+            item =>
+                item.order_id ===
+                panel.order_id
+        );
+
+
+    if(
+        !exists
+    ){
+
+        panels.unshift(
+            panel
+        );
+
+    }
 
 
     localStorage.setItem(
-
         "jaypay_panels",
-
         JSON.stringify(
             panels
         )
-
     );
 
 }
 
 
-/* ==================================================
-   LOAD MY PANELS
-================================================== */
+/* =========================================================
+   PANEL SAYA
+========================================================= */
 
 function loadMyPanels(){
 
@@ -3292,15 +2542,10 @@ function loadMyPanels(){
 
     const panels =
         JSON.parse(
-
             localStorage.getItem(
                 "jaypay_panels"
-            )
-
-            ||
-
+            ) ||
             "[]"
-
         );
 
 
@@ -3317,8 +2562,8 @@ function loadMyPanels(){
                 </h3>
 
                 <p>
-                    Panel yang berhasil
-                    dibuat akan muncul di sini.
+                    Panel yang berhasil dibuat
+                    akan muncul di sini.
                 </p>
 
             </div>
@@ -3330,13 +2575,11 @@ function loadMyPanels(){
     }
 
 
-    container.innerHTML =
-        "";
+    container.innerHTML = "";
 
 
     panels.forEach(
         panel => {
-
 
             const card =
                 document.createElement(
@@ -3361,9 +2604,11 @@ function loadMyPanels(){
 
                     </h2>
 
-
                     <span
-                        class="status-active">
+                        class="status"
+                        id="status-${escapeHtml(
+                            panel.order_id
+                        )}">
 
                         ${escapeHtml(
                             panel.status ||
@@ -3378,9 +2623,7 @@ function loadMyPanels(){
                 <div
                     class="panel-info">
 
-
-                    <div
-                        class="info">
+                    <div class="info">
 
                         <span>
                             Produk
@@ -3389,7 +2632,7 @@ function loadMyPanels(){
                         <strong>
 
                             ${escapeHtml(
-                                panel.product ||
+                                panel.product_name ||
                                 panel.product_id
                             )}
 
@@ -3398,8 +2641,7 @@ function loadMyPanels(){
                     </div>
 
 
-                    <div
-                        class="info">
+                    <div class="info">
 
                         <span>
                             Username
@@ -3417,8 +2659,7 @@ function loadMyPanels(){
                     </div>
 
 
-                    <div
-                        class="info">
+                    <div class="info">
 
                         <span>
                             Order ID
@@ -3436,11 +2677,10 @@ function loadMyPanels(){
                     </div>
 
 
-                    <div
-                        class="info">
+                    <div class="info">
 
                         <span>
-                            WhatsApp
+                            Nomor WhatsApp
                         </span>
 
                         <strong>
@@ -3454,17 +2694,13 @@ function loadMyPanels(){
 
                     </div>
 
-
                 </div>
 
 
                 ${
                     panel.panel_url
-
                     ?
-
                     `
-
                     <a
                         class="open-panel"
                         href="${escapeAttribute(
@@ -3476,13 +2712,9 @@ function loadMyPanels(){
                         Buka Panel
 
                     </a>
-
                     `
-
                     :
-
                     ""
-
                 }
 
             `;
@@ -3492,120 +2724,206 @@ function loadMyPanels(){
                 card
             );
 
+
+            /*
+             * Update status secara realtime
+             * menggunakan endpoint dokumentasi.
+             */
+
+            if(
+                panel.order_id
+            ){
+
+                updateOrderStatus(
+                    panel.order_id
+                );
+
+            }
+
         }
     );
 
 }
 
 
-/* ==================================================
-   SAVE TRANSACTION LOCAL
-================================================== */
+/* =========================================================
+   UPDATE ORDER STATUS
+========================================================= */
 
-function saveTransaction(
+async function updateOrderStatus(
+    orderId
+){
+
+    try{
+
+        const result =
+            await getOrderStatus(
+                orderId
+            );
+
+
+        if(
+            result.status !==
+            "success"
+        ){
+
+            return;
+
+        }
+
+
+        const data =
+            result.data ||
+            {};
+
+
+        /*
+         * Update local storage.
+         */
+
+        const panels =
+            JSON.parse(
+                localStorage.getItem(
+                    "jaypay_panels"
+                ) ||
+                "[]"
+            );
+
+
+        const index =
+            panels.findIndex(
+                panel =>
+                    panel.order_id ===
+                    orderId
+            );
+
+
+        if(
+            index >= 0
+        ){
+
+            panels[index].status =
+                data.status ||
+                panels[index].status;
+
+
+            panels[index].panel_url =
+                data.panel_url ||
+                panels[index].panel_url;
+
+
+            localStorage.setItem(
+                "jaypay_panels",
+                JSON.stringify(
+                    panels
+                )
+            );
+
+        }
+
+
+        const statusElement =
+            document.getElementById(
+                "status-" +
+                orderId
+            );
+
+
+        if(
+            statusElement
+        ){
+
+            statusElement.textContent =
+                data.status ||
+                "active";
+
+        }
+
+
+    }catch(error){
+
+        console.log(
+            "Status order:",
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOCAL TRANSACTION
+========================================================= */
+
+function saveLocalTransaction(
     transaction
 ){
 
     const transactions =
         JSON.parse(
-
             localStorage.getItem(
-                "jaypay_transactions"
-            )
-
-            ||
-
+                "jaypay_local_transactions"
+            ) ||
             "[]"
-
         );
 
 
-    transactions.unshift(
-        transaction
-    );
+    const exists =
+        transactions.some(
+            item =>
+                item.order_id ===
+                transaction.order_id
+        );
+
+
+    if(
+        !exists
+    ){
+
+        transactions.unshift(
+            transaction
+        );
+
+    }
 
 
     localStorage.setItem(
-
-        "jaypay_transactions",
-
+        "jaypay_local_transactions",
         JSON.stringify(
             transactions
         )
-
     );
 
 }
 
 
-/* ==================================================
+/* =========================================================
    CLEAR FORM
-================================================== */
+========================================================= */
 
 function clearForm(){
 
     document.getElementById(
-        "emailUser"
-    ).value =
-        "";
-
-
-    document.getElementById(
         "panelName"
-    ).value =
-        "";
+    ).value = "";
 
 
     document.getElementById(
         "whatsapp"
-    ).value =
-        "";
+    ).value = "";
 
 
     document.getElementById(
         "serverType"
-    ).value =
-        "";
+    ).value = "";
 
 }
 
 
-/* ==================================================
-   LOADING
-================================================== */
-
-function showLoading(
-    state
-){
-
-    const loading =
-        document.getElementById(
-            "loading"
-        );
-
-
-    if(state){
-
-        loading.classList.add(
-            "active"
-        );
-
-    }
-
-    else{
-
-        loading.classList.remove(
-            "active"
-        );
-
-    }
-
-}
-
-
-/* ==================================================
-   FORMAT RUPIAH
-================================================== */
+/* =========================================================
+   FORMAT
+========================================================= */
 
 function formatRupiah(
     value
@@ -3620,9 +2938,9 @@ function formatRupiah(
 }
 
 
-/* ==================================================
+/* =========================================================
    ESCAPE HTML
-================================================== */
+========================================================= */
 
 function escapeHtml(
     value
@@ -3631,27 +2949,22 @@ function escapeHtml(
     return String(
         value ?? ""
     )
-
     .replace(
         /&/g,
         "&amp;"
     )
-
     .replace(
         /</g,
         "&lt;"
     )
-
     .replace(
         />/g,
         "&gt;"
     )
-
     .replace(
         /"/g,
         "&quot;"
     )
-
     .replace(
         /'/g,
         "&#039;"
@@ -3660,44 +2973,9 @@ function escapeHtml(
 }
 
 
-/* ==================================================
-   ESCAPE JS
-================================================== */
-
-function escapeJs(
-    value
-){
-
-    return String(
-        value ?? ""
-    )
-
-    .replace(
-        /\\/g,
-        "\\\\"
-    )
-
-    .replace(
-        /'/g,
-        "\\'"
-    )
-
-    .replace(
-        /\n/g,
-        "\\n"
-    )
-
-    .replace(
-        /\r/g,
-        "\\r"
-    );
-
-}
-
-
-/* ==================================================
+/* =========================================================
    ESCAPE ATTRIBUTE
-================================================== */
+========================================================= */
 
 function escapeAttribute(
     value
@@ -3706,12 +2984,10 @@ function escapeAttribute(
     return String(
         value ?? ""
     )
-
     .replace(
         /"/g,
         "%22"
     )
-
     .replace(
         /'/g,
         "%27"
@@ -3720,9 +2996,104 @@ function escapeAttribute(
 }
 
 
-/* ==================================================
-   CLOSE MODAL WHEN CLICK OUTSIDE
-================================================== */
+/* =========================================================
+   SHOW ERROR
+========================================================= */
+
+function showProductsError(
+    container,
+    message
+){
+
+    container.innerHTML = `
+
+        <div class="empty">
+
+            <h3>
+                Gagal memuat produk
+            </h3>
+
+            <p>
+                ${escapeHtml(
+                    message
+                )}
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+function showLoading(
+    show
+){
+
+    document
+        .getElementById(
+            "loading"
+        )
+        .classList.toggle(
+            "active",
+            show
+        );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            3000
+        );
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL OUTSIDE
+========================================================= */
 
 document
     .getElementById(
@@ -3745,20 +3116,28 @@ document
     );
 
 
-/* ==================================================
-   INITIAL LOAD
-================================================== */
+/* =========================================================
+   INITIALIZATION
+========================================================= */
 
-loadProducts();
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
 
-loadBalance();
+        loadUser();
 
-loadTransactions();
+        await loadProducts();
 
-loadMyPanels();
+        await loadBalance();
+
+        loadTransactions();
+
+        loadMyPanels();
+
+    }
+);
 
 </script>
-
 
 </body>
 </html>
